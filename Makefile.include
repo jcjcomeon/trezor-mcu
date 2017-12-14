@@ -42,7 +42,7 @@ CFLAGS   += $(OPTFLAGS) \
             -fvisibility=internal \
             -ffunction-sections \
             -fdata-sections \
-            -fstack-protector-all \
+            -fno-stack-protector \
             $(CPUFLAGS) \
             $(FPUFLAGS) \
             -DSTM32F2 \
