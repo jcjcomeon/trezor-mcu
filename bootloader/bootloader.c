@@ -128,9 +128,9 @@ int main(void)
 #ifndef APPVER
 	setup();
 #endif
-	__stack_chk_guard = random32(); // this supports compiler provided unpredictable stack protection checks
+	//__stack_chk_guard = random32(); // this supports compiler provided unpredictable stack protection checks
 #ifndef APPVER
-	memory_protect();
+	//memory_protect();
 	oledInit();
 #endif
 
