@@ -308,14 +308,14 @@ void fsm_msgChangePin(ChangePin *msg)
 	bool removal = msg->has_remove && msg->remove;
 	if (removal) {
 		if (storage_hasPin()) {
-			layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("remove current PIN"), NULL, NULL, NULL, NULL);
+			layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("remove current PIN?"), NULL, NULL, NULL, NULL);
 		} else {
 			fsm_sendSuccess(_("PIN removed"));
 			return;
 		}
 	} else {
 		if (storage_hasPin()) {
-			layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("change current PIN"), NULL, NULL, NULL, NULL);
+			layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("change current PIN?"), NULL, NULL, NULL, NULL);
 		} else {
 			layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("set new PIN?"), NULL, NULL, NULL, NULL);
 		}
@@ -627,7 +627,7 @@ void fsm_msgApplySettings(ApplySettings *msg)
 		}
 	}
 	if (msg->has_homescreen) {
-		layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("change the home"), _("screen?!"), NULL, NULL, NULL);
+		layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("change the home"), _("screen?"), NULL, NULL, NULL);
 		if (!protectButton(ButtonRequestType_ButtonRequest_ProtectCall, false)) {
 			fsm_sendFailure(FailureType_Failure_ActionCancelled, NULL);
 			layoutHome();
