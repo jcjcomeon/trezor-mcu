@@ -303,19 +303,19 @@ void fsm_msgPing(Ping *msg)
 	layoutHome();
 }
 
-void fsm_msgChangePin_test(ChangePin *msg)
+void fsm_msgChangePin(ChangePin *msg)
 {
 	bool removal = msg->has_remove && msg->remove;
 	if (removal) {
 		if (storage_hasPin()) {
-			layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("remove urrent PIN?"), NULL, NULL, NULL, NULL);
+			layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("remove current PIN"), NULL, NULL, NULL, NULL);
 		} else {
 			fsm_sendSuccess(_("PIN removed"));
 			return;
 		}
 	} else {
 		if (storage_hasPin()) {
-			layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("change urrent PIN?"), NULL, NULL, NULL, NULL);
+			layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("change current PIN"), NULL, NULL, NULL, NULL);
 		} else {
 			layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("set new PIN?"), NULL, NULL, NULL, NULL);
 		}
@@ -596,7 +596,7 @@ void fsm_msgClearSession(ClearSession *msg)
 	fsm_sendSuccess(_("Session cleared"));
 }
 
-void fsm_msgApplySettings_test(ApplySettings *msg)
+void fsm_msgApplySettings(ApplySettings *msg)
 {
 	CHECK_PARAM(msg->has_label || msg->has_language || msg->has_use_passphrase || msg->has_homescreen, _("No setting provided"));
 
@@ -627,7 +627,7 @@ void fsm_msgApplySettings_test(ApplySettings *msg)
 		}
 	}
 	if (msg->has_homescreen) {
-		layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("hange the home"), _("screen?"), NULL, NULL, NULL);
+		layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("change the home"), _("screen?!"), NULL, NULL, NULL);
 		if (!protectButton(ButtonRequestType_ButtonRequest_ProtectCall, false)) {
 			fsm_sendFailure(FailureType_Failure_ActionCancelled, NULL);
 			layoutHome();
