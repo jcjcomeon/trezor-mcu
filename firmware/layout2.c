@@ -282,7 +282,7 @@ void layoutSignMessage(const uint8_t *msg, uint32_t len)
 void layoutSignMessage2(const uint8_t *msg, uint32_t len, int rowindex)
 {
 	const char **str = split_message2(msg, len, 16, rowindex);
-	layoutDialog(DIALOG_ICON_QUESTION, "Cancel", "Confirm",
+	layoutDialog(&bmp_icon_question, "Cancel", "Confirm",
 		"Sign message?",
 		str[0], str[1], str[2], str[3], NULL, NULL);
 }
@@ -307,7 +307,7 @@ void layoutVerifyMessage(const uint8_t *msg, uint32_t len)
 void layoutVerifyMessage2(const uint8_t *msg, uint32_t len, int rowindex)
 {
 	const char **str = split_message2(msg, len, 16, rowindex);
-	layoutDialog(DIALOG_ICON_INFO, NULL, "OK",
+	layoutDialog(&bmp_icon_info, NULL, "OK",
 		"Verified message",
 		str[0], str[1], str[2], str[3], NULL, NULL);
 }
@@ -323,7 +323,7 @@ void layoutCipherKeyValue(bool encrypt, const char *key)
 void layoutCipherKeyValue2(bool encrypt, const char *key, int rowindex)
 {
 	const char **str = split_message2((const uint8_t *)key, strlen(key), 16, rowindex);
-	layoutDialog(DIALOG_ICON_QUESTION, "Cancel", "Confirm",
+	layoutDialog(&bmp_icon_question, "Cancel", "Confirm",
 		encrypt ? "Encode value of this key?" : "Decode value of this key?",
 		str[0], str[1], str[2], str[3], NULL, NULL);
 }
