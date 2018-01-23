@@ -24,6 +24,7 @@
 #include "types.pb.h"
 
 bool protectButton(ButtonRequestType type, bool confirm_only);
+int protectButton2(ButtonRequestType type, bool confirm_only);
 bool protectPin(bool use_cached);
 bool protectChangePin(void);
 bool protectPassphrase(void);

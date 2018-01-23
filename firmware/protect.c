@@ -108,6 +108,91 @@ bool protectButton(ButtonRequestType type, bool confirm_only)
 	return result;
 }
 
+int protectButton2(ButtonRequestType type, bool confirm_only)
+{
+	ButtonRequest resp;
+	int result = 0;//0, No; 1, Yes; 2, Md; 3, Up; 4,Dn
+	bool acked = false;
+#if DEBUG_LINK
+	bool debug_decided = false;
+#endif
+
+	memset(&resp, 0, sizeof(ButtonRequest));
+	resp.has_code = true;
+	resp.code = type;
+	usbTiny(1);
+	msg_write(MessageType_MessageType_ButtonRequest, &resp);
+
+	for (;;) {
+		usbPoll();
+
+		// check for ButtonAck
+		if (msg_tiny_id == MessageType_MessageType_ButtonAck) {
+			msg_tiny_id = 0xFFFF;
+			acked = true;
+		}
+
+		// button acked - check buttons
+		if (acked) {
+			delay(100000);
+			buttonUpdate();
+			if (button.YesUp) {
+				result = 1;
+				break;
+			}
+			if (button.MdUp) {
+				result = 2;
+				break;
+			}
+			if (button.UpUp) {
+				result = 3;
+				break;
+			}
+			if (button.DnUp) {
+				result = 4;
+				break;
+			}
+			if (!confirm_only && button.NoUp) {
+				result = 0;
+				break;
+			}
+		}
+
+		// check for Cancel / Initialize
+		if (msg_tiny_id == MessageType_MessageType_Cancel || msg_tiny_id == MessageType_MessageType_Initialize) {
+			if (msg_tiny_id == MessageType_MessageType_Initialize) {
+				protectAbortedByInitialize = true;
+			}
+			msg_tiny_id = 0xFFFF;
+			result = 0;
+			break;
+		}
+
+#if DEBUG_LINK
+		// check DebugLink
+		if (msg_tiny_id == MessageType_MessageType_DebugLinkDecision) {
+			msg_tiny_id = 0xFFFF;
+			DebugLinkDecision *dld = (DebugLinkDecision *)msg_tiny;
+			result = dld->yes_no;
+			debug_decided = true;
+		}
+
+		if (acked && debug_decided) {
+			break;
+		}
+
+		if (msg_tiny_id == MessageType_MessageType_DebugLinkGetState) {
+			msg_tiny_id = 0xFFFF;
+			fsm_msgDebugLinkGetState((DebugLinkGetState *)msg_tiny);
+		}
+#endif
+	}
+
+	usbTiny(0);
+
+	return result;
+}
+
 const char *requestPin(PinMatrixRequestType type, const char *text)
 {
 	PinMatrixRequest resp;

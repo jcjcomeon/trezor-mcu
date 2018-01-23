@@ -21,6 +21,7 @@
 #define __FSM_H__
 
 #include "messages.pb.h"
+#include <stdbool.h>
 
 // message functions
 

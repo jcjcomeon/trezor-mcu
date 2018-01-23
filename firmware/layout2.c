@@ -221,11 +221,69 @@ void layoutFeeOverThreshold(const CoinInfo *coin, uint64_t fee)
 	);
 }
 
+// split longer string into 8 rows, rowlen chars each and return only 4 rows from rowindex to rowindex+3
+const char **split_message2(const uint8_t *msg, uint32_t len, uint32_t rowlen, int rowindex)
+{
+	static char str2[8][32 + 1];
+	if (rowlen > 32) {
+		rowlen = 32;
+	}
+	memset(str2, 0, sizeof(str2));
+	strlcpy(str2[0], (char *)msg, rowlen + 1);
+	if (len > rowlen) {
+		strlcpy(str2[1], (char *)msg + rowlen, rowlen + 1);
+	}
+	if (len > rowlen * 2) {
+		strlcpy(str2[2], (char *)msg + rowlen * 2, rowlen + 1);
+	}
+	if (len > rowlen * 3) {
+		strlcpy(str2[3], (char *)msg + rowlen * 3, rowlen + 1);
+	}
+	if (len > rowlen * 4) {
+		strlcpy(str2[4], (char *)msg + rowlen * 4, rowlen + 1);
+	}
+	if (len > rowlen * 5) {
+		strlcpy(str2[5], (char *)msg + rowlen * 5, rowlen + 1);
+	}
+	if (len > rowlen * 6) {
+		strlcpy(str2[6], (char *)msg + rowlen * 6, rowlen + 1);
+	}
+	if (len > rowlen * 7) {
+		strlcpy(str2[7], (char *)msg + rowlen * 7, rowlen + 1);
+	}
+	static char ret[4][32+1];
+	memset(ret, 0, sizeof(ret));
+	if(rowindex<(8-4)) {
+		if(rowindex<0) rowindex=0;
+		strlcpy(ret[0], str2[rowindex], rowlen + 1);
+		strlcpy(ret[1], str2[rowindex+1], rowlen + 1);
+		strlcpy(ret[2], str2[rowindex+2], rowlen + 1);
+		strlcpy(ret[3], str2[rowindex+3], rowlen + 1);
+	}
+	else {
+		if(rowindex>7) rowindex=7;
+		strlcpy(ret[0], str2[4], rowlen + 1);
+		strlcpy(ret[1], str2[5], rowlen + 1);
+		strlcpy(ret[2], str2[6], rowlen + 1);
+		strlcpy(ret[3], str2[7], rowlen + 1);
+	}
+	static const char *ret2[4] = { ret[0], ret[1], ret[2], ret[3] };
+	return ret2;
+}
+
 void layoutSignMessage(const uint8_t *msg, uint32_t len)
 {
 	const char **str = split_message(msg, len, 16);
 	layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"),
 		_("Sign message?"),
+		str[0], str[1], str[2], str[3], NULL, NULL);
+}
+
+void layoutSignMessage2(const uint8_t *msg, uint32_t len, int rowindex)
+{
+	const char **str = split_message2(msg, len, 16, rowindex);
+	layoutDialog(DIALOG_ICON_QUESTION, "Cancel", "Confirm",
+		"Sign message?",
 		str[0], str[1], str[2], str[3], NULL, NULL);
 }
 
@@ -246,11 +304,27 @@ void layoutVerifyMessage(const uint8_t *msg, uint32_t len)
 		str[0], str[1], str[2], str[3], NULL, NULL);
 }
 
+void layoutVerifyMessage2(const uint8_t *msg, uint32_t len, int rowindex)
+{
+	const char **str = split_message2(msg, len, 16, rowindex);
+	layoutDialog(DIALOG_ICON_INFO, NULL, "OK",
+		"Verified message",
+		str[0], str[1], str[2], str[3], NULL, NULL);
+}
+
 void layoutCipherKeyValue(bool encrypt, const char *key)
 {
 	const char **str = split_message((const uint8_t *)key, strlen(key), 16);
 	layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"),
 		encrypt ? _("Encrypt value of this key?") : _("Decrypt value of this key?"),
+		str[0], str[1], str[2], str[3], NULL, NULL);
+}
+
+void layoutCipherKeyValue2(bool encrypt, const char *key, int rowindex)
+{
+	const char **str = split_message2((const uint8_t *)key, strlen(key), 16, rowindex);
+	layoutDialog(DIALOG_ICON_QUESTION, "Cancel", "Confirm",
+		encrypt ? "Encode value of this key?" : "Decode value of this key?",
 		str[0], str[1], str[2], str[3], NULL, NULL);
 }
 
