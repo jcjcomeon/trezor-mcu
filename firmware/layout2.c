@@ -72,7 +72,7 @@ void layoutDialogSwipe(const BITMAP *icon, const char *btnNo, const char *btnYes
 	layoutDialog(icon, btnNo, btnYes, desc, line1, line2, line3, line4, line5, line6);
 }
 
-void layoutZhDialogSwipe(LayoutDialogIcon icon, const char *btnNo, const char *btnYes, const char *desc, const char *line1, const char *line2, const char *line3, const char *line4)
+void layoutZhDialogSwipe(const BITMAP *icon, const char *btnNo, const char *btnYes, const char *desc, const char *line1, const char *line2, const char *line3, const char *line4)
 {
 	layoutLast = layoutDialogSwipe;
 	oledSwipeLeft();

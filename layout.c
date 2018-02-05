@@ -59,7 +59,7 @@ void layoutDialog(const BITMAP *icon, const char *btnNo, const char *btnYes, con
 	oledRefresh();
 }
 
-void layoutZhDialog(LayoutDialogIcon icon, const char *btnNo, const char *btnYes, const char *desc, const char *line1, const char *line2, const char *line3, const char *line4)
+void layoutZhDialog(const BITMAP *icon, const char *btnNo, const char *btnYes, const char *desc, const char *line1, const char *line2, const char *line3, const char *line4)
 {
 	int left = 0;
 	int yoffset = 0;
