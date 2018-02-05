@@ -308,7 +308,8 @@ void fsm_msgChangePin(ChangePin *msg)
 	bool removal = msg->has_remove && msg->remove;
 	if (removal) {
 		if (storage_hasPin()) {
-			layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("remove current PIN?"), NULL, NULL, NULL, NULL);
+			layoutZhDialogSwipe(&bmp_icon_question, "取消", "确认", NULL, "移除#P##I##N#码#?#", NULL, NULL, NULL);
+			//layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("remove current PIN?"), NULL, NULL, NULL, NULL);
 		} else {
 			fsm_sendSuccess(_("PIN removed"));
 			return;

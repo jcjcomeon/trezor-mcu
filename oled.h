@@ -25,6 +25,7 @@
 
 #include "bitmaps.h"
 #include "fonts.h"
+#include "chinese.h"
 
 #define OLED_WIDTH   128
 #define OLED_HEIGHT  64

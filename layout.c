@@ -59,6 +59,111 @@ void layoutDialog(const BITMAP *icon, const char *btnNo, const char *btnYes, con
 	oledRefresh();
 }
 
+void layoutZhDialog(LayoutDialogIcon icon, const char *btnNo, const char *btnYes, const char *desc, const char *line1, const char *line2, const char *line3, const char *line4)
+{
+	int left = 0;
+	int yoffset = 0;
+	oledClear();
+	switch (icon) {
+		case DIALOG_NOICON:
+			break;
+		case DIALOG_ICON_ERROR:
+			oledDrawBitmap(0, 0, &bmp_icon_error);
+			left = 20;
+			break;
+		case DIALOG_ICON_INFO:
+			oledDrawBitmap(0, 0, &bmp_icon_info);
+			left = 20;
+			break;
+		case DIALOG_ICON_QUESTION:
+			oledDrawBitmap(0, 0, &bmp_icon_question);
+			left = 20;
+			break;
+		case DIALOG_ICON_WARNING:
+			oledDrawBitmap(0, 0, &bmp_icon_warning);
+			left = 20;
+			break;
+		case DIALOG_ICON_OK:
+			oledDrawBitmap(0, 0, &bmp_icon_ok);
+			left = 20;
+			break;
+	}
+
+	if (line1){
+		if(*line1 < 128){	
+			oledDrawString(left, ((0 * 9) + yoffset) , line1);
+			yoffset += ENLINE;
+		} else {
+			oledDrawZh(left, ((0 * 12) + yoffset), line1);
+			yoffset += ZHLINE;
+		}
+	}
+	else 
+		yoffset += ENLINE;
+
+	if (line2){
+		if(*line2 < 128){	
+			oledDrawString(left, ((0 * 9) + yoffset ) , line2);
+			yoffset += ENLINE;
+		} else {
+			oledDrawZh(left, ((0 * 12) + yoffset ), line2);
+			yoffset += ZHLINE;
+		}
+	}
+	else 
+		yoffset += ENLINE;
+
+	if (line3){
+		if(*line3 < 128){	
+			oledDrawString(left, ((0 * 9) + yoffset ) , line3);
+			yoffset += ENLINE;
+		} else {
+			oledDrawZh(left, ((0 * 12) + yoffset ), line3);
+			yoffset += ZHLINE;
+		}
+	}
+	else 
+		yoffset += ENLINE;
+
+	if (line4){
+		if(*line4 < 128){	
+			oledDrawString(left, ((0 * 9) + yoffset ) , line4);
+		} else {
+			oledDrawZh(left, ((0 * 12) + yoffset  ), line4);
+		}
+	}
+	
+	if (desc) {
+		if(*desc < 128) {
+			oledDrawStringCenter(OLED_HEIGHT - 2 * 9 - 1, desc);
+			if (btnYes || btnNo) {
+				oledHLine(OLED_HEIGHT - 21);
+			}
+		}else {
+			oledDrawZhCenter(OLED_HEIGHT - 2 * 12 - 1, desc);
+			if (btnYes || btnNo) {
+				oledHLine(OLED_HEIGHT - 27);
+			}
+		}
+	} else {
+		if (btnYes || btnNo) {
+			oledHLine(OLED_HEIGHT - 15);
+		}
+	}
+
+	if (btnNo) {
+		oledDrawZh(1, OLED_HEIGHT - 12, "#{#");
+		oledDrawZh(10, OLED_HEIGHT - 12, btnNo);
+		oledInvert(0, OLED_HEIGHT - 12, ((strlen(btnYes) / 3) * 12) + 9, OLED_HEIGHT - 1);
+	}
+	if (btnYes) {
+		oledDrawZh(OLED_WIDTH - 8 - 1, OLED_HEIGHT - 12, "#}#");
+		oledDrawZh(OLED_WIDTH - ((strlen(btnYes) / 3) * 12) - 8 - 1, OLED_HEIGHT - 12, btnYes);
+		oledInvert(OLED_WIDTH - ((strlen(btnYes) / 3) * 12) - 8 - 2, OLED_HEIGHT - 12, OLED_WIDTH - 1, OLED_HEIGHT - 1);
+	}
+	oledRefresh();
+}
+
 void layoutProgressUpdate(bool refresh)
 {
 	static uint8_t step = 0;

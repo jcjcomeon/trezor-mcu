@@ -10,6 +10,7 @@ OBJS += memory.o
 OBJS += timer.o
 OBJS += gen/bitmaps.o
 OBJS += gen/fonts.o
+OBJS += gen/chinese.o
 
 libtrezor.a: $(OBJS)
 	$(AR) rcs libtrezor.a $(OBJS)
