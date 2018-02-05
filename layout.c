@@ -64,29 +64,9 @@ void layoutZhDialog(const BITMAP *icon, const char *btnNo, const char *btnYes, c
 	int left = 0;
 	int yoffset = 0;
 	oledClear();
-	switch (icon) {
-		case DIALOG_NOICON:
-			break;
-		case DIALOG_ICON_ERROR:
-			oledDrawBitmap(0, 0, &bmp_icon_error);
-			left = 20;
-			break;
-		case DIALOG_ICON_INFO:
-			oledDrawBitmap(0, 0, &bmp_icon_info);
-			left = 20;
-			break;
-		case DIALOG_ICON_QUESTION:
-			oledDrawBitmap(0, 0, &bmp_icon_question);
-			left = 20;
-			break;
-		case DIALOG_ICON_WARNING:
-			oledDrawBitmap(0, 0, &bmp_icon_warning);
-			left = 20;
-			break;
-		case DIALOG_ICON_OK:
-			oledDrawBitmap(0, 0, &bmp_icon_ok);
-			left = 20;
-			break;
+	if (icon) {
+		oledDrawBitmap(0, 0, icon);
+		left = icon->width + 4;
 	}
 
 	if (line1){

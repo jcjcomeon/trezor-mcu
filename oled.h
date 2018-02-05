@@ -57,4 +57,10 @@ void oledFrame(int x1, int y1, int x2, int y2);
 void oledSwipeLeft(void);
 void oledSwipeRight(void);
 
+void oledDrawZhCenter(int y, const char* text);
+void oledDrawZh(int x, int y, const char *text);
+void oledDrawZhFont(int x, int y, int mask);
+void oledDrawZhAscii(int x, int y, int mask);
+int oledFindZhFont(uint8_t fbit, uint8_t sbit, uint8_t tbit);
+
 #endif
