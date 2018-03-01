@@ -132,12 +132,12 @@ void layoutZhDialog(const BITMAP *icon, const char *btnNo, const char *btnYes, c
 	}
 
 	if (btnNo) {
-		oledDrawZh(1, OLED_HEIGHT - 12, "\x15");
-		oledDrawZh(fontCharWidth('\x15'), OLED_HEIGHT - 12, btnNo);
+		oledDrawString(1, OLED_HEIGHT - 8, "\x15");
+		oledDrawZh(10, OLED_HEIGHT - 12, btnNo);
 		oledInvert(0, OLED_HEIGHT - 12, ((strlen(btnYes) / 3) * 12) + 9, OLED_HEIGHT - 1);
 	}
 	if (btnYes) {
-		oledDrawZh(OLED_WIDTH - fontCharWidth('\x06') - 1, OLED_HEIGHT - 12, "\x06");
+		oledDrawString(OLED_WIDTH - fontCharWidth('\x06') - 1, OLED_HEIGHT - 8, "\x06");
 		oledDrawZh(OLED_WIDTH - ((strlen(btnYes) / 3) * 12) - 8 - 1, OLED_HEIGHT - 12, btnYes);
 		oledInvert(OLED_WIDTH - ((strlen(btnYes) / 3) * 12) - 8 - 2, OLED_HEIGHT - 12, OLED_WIDTH - 1, OLED_HEIGHT - 1);
 	}
