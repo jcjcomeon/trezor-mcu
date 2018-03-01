@@ -132,14 +132,14 @@ void layoutZhDialog(const BITMAP *icon, const char *btnNo, const char *btnYes, c
 	}
 
 	if (btnNo) {
-		oledDrawZh(1, OLED_HEIGHT - 12, "#{#");
-		oledDrawZh(10, OLED_HEIGHT - 12, btnNo);
-		oledInvert(0, OLED_HEIGHT - 12, ((strlen(btnYes) / 3) * 12) + 9, OLED_HEIGHT - 1);
+		oledDrawString(1, OLED_HEIGHT - 8, "\x15");
+		oledDrawString(fontCharWidth('\x15') + 3, OLED_HEIGHT - 8, btnNo);
+		oledInvert(0, OLED_HEIGHT - 9, fontCharWidth('\x15') + oledStringWidth(btnNo) + 2, OLED_HEIGHT - 1);
 	}
 	if (btnYes) {
-		oledDrawZh(OLED_WIDTH - 8 - 1, OLED_HEIGHT - 12, "#}#");
-		oledDrawZh(OLED_WIDTH - ((strlen(btnYes) / 3) * 12) - 8 - 1, OLED_HEIGHT - 12, btnYes);
-		oledInvert(OLED_WIDTH - ((strlen(btnYes) / 3) * 12) - 8 - 2, OLED_HEIGHT - 12, OLED_WIDTH - 1, OLED_HEIGHT - 1);
+		oledDrawString(OLED_WIDTH - fontCharWidth('\x06') - 1, OLED_HEIGHT - 8, "\x06");
+		oledDrawString(OLED_WIDTH - oledStringWidth(btnYes) - fontCharWidth('\x06') - 3, OLED_HEIGHT - 8, btnYes);
+		oledInvert(OLED_WIDTH - oledStringWidth(btnYes) - fontCharWidth('\x06') - 4, OLED_HEIGHT - 9, OLED_WIDTH - 1, OLED_HEIGHT - 1);
 	}
 	oledRefresh();
 }
