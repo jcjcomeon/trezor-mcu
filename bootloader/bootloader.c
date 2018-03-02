@@ -119,7 +119,7 @@ void bootloader_loop(void)
 		oledDrawString(52, 30, serial);      // first part of serial
 		oledDrawStringRight(OLED_WIDTH - 1, OLED_HEIGHT - 8, "Loader " VERSTR(VERSION_MAJOR) "." VERSTR(VERSION_MINOR) "." VERSTR(VERSION_PATCH));
 	} else {
-		oledDrawZh(52,10,"欢迎#！#请使用");
+		oledDrawZh(52,10,"欢迎#!#请使用");
 		oledDrawZh(52,30,"初始化工具");
 		oledDrawZh(52,50,"完成钱包设置");
 		//oledDrawString(52, 10, "Welcome!");

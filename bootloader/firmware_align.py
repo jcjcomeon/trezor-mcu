@@ -8,6 +8,6 @@ if fs > 34816:
 	print(fs)
 	raise Exception(fs)
 	raise Exception('bootloader has to be smaller than 32768 bytes')
-with open(fn, 'ab') as f:
-	f.write(b'\xFF' * (34816 - fs))
-	f.close()
+#with open(fn, 'ab') as f:
+#	f.write(b'\xFF' * (34816 - fs))
+#	f.close()
