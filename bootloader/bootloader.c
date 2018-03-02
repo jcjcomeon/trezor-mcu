@@ -40,21 +40,21 @@ void layoutFirmwareHash(const uint8_t *hash)
 	for (int i = 0; i < 4; i++) {
 		data2hex(hash + i * 8, 8, str[i]);
 	}
-	layoutZhDialog(&bmp_icon_question,"终止","继续","比对哈希值",str[0], str[1], str[2], str[3]);
-	//layoutDialog(&bmp_icon_question, "Abort", "Continue", "Compare fingerprints", str[0], str[1], str[2], str[3], NULL, NULL);
+	//layoutZhDialog(&bmp_icon_question,"终止","继续","请比对哈希值",str[0], str[1], str[2], str[3]);
+	layoutDialog(&bmp_icon_question, "Abort", "Continue", "Compare fingerprints", str[0], str[1], str[2], str[3], NULL, NULL);
 }
 
 void show_halt(void)
 {
-	layoutZhDialog(&bmp_icon_error, NULL, NULL, NULL, "非官方固件", "请拔出钱包", "获取官方固件后", "继续使用");
-	//layoutDialog(&bmp_icon_error, NULL, NULL, NULL, "Unofficial firmware", "aborted.", NULL, "Unplug your TREZOR", "contact our support.", NULL);
+	//layoutZhDialog(&bmp_icon_error, NULL, NULL, NULL, "非官方固件", "请拔出钱包", "获取官方固件后", "继续使用");
+	layoutDialog(&bmp_icon_error, NULL, NULL, NULL, "Unofficial firmware", "aborted.", NULL, "Unplug your TREZOR", "contact our support.", NULL);
 	system_halt();
 }
 
 void show_unofficial_warning(const uint8_t *hash)
 {
-	layoutZhDialog(&bmp_icon_warning, "终止", "继续", NULL, "警告#!#", NULL,"检测到非官方固件", "存在风险");
-	//layoutDialog(&bmp_icon_warning, "Abort", "I'll take the risk", NULL, "WARNING!", NULL, "Unofficial firmware", "detected.", NULL, NULL);
+	//layoutZhDialog(&bmp_icon_warning, "终止", "承担风险并继续", NULL, "警告#!#", NULL,"检测到非官方固件", "存在风险");
+	layoutDialog(&bmp_icon_warning, "Abort", "I'll take the risk", NULL, "WARNING!", NULL, "Unofficial firmware", "detected.", NULL, NULL);
 
 	do {
 		delay(100000);
@@ -108,23 +108,23 @@ void bootloader_loop(void)
 	oledClear();
 	oledDrawBitmap(0, 0, &bmp_logo64);
 	if (firmware_present()) {
-		oledDrawZh(52,0,"硬件钱包");
-		//oledDrawString(52, 0, "TREZOR");
+		//oledDrawZh(52,0,"硬件钱包");
+		oledDrawString(52, 0, "TREZOR");
 		static char serial[25];
 		fill_serialno_fixed(serial);
-		oledDrawZh(52,20,"唯一序列号#:#");
-		//oledDrawString(52, 20, "Serial No.");
+		//oledDrawZh(52,20,"唯一序列号#:#");
+		oledDrawString(52, 20, "Serial No.");
 		oledDrawString(52, 40, serial + 12); // second part of serial
 		serial[12] = 0;
 		oledDrawString(52, 30, serial);      // first part of serial
 		oledDrawStringRight(OLED_WIDTH - 1, OLED_HEIGHT - 8, "Loader " VERSTR(VERSION_MAJOR) "." VERSTR(VERSION_MINOR) "." VERSTR(VERSION_PATCH));
 	} else {
-		oledDrawZh(52,10,"欢迎#！#请使用");
-		oledDrawZh(52,30,"初始化工具");
-		oledDrawZh(52,50,"完成钱包设置");
-		//oledDrawString(52, 10, "Welcome!");
-		//oledDrawString(52, 30, "Please visit");
-		//oledDrawString(52, 50, "trezor.io/start");
+		//oledDrawZh(52,10,"欢迎#！#请使用");
+		//oledDrawZh(52,30,"初始化工具");
+		//oledDrawZh(52,50,"完成钱包设置");
+		oledDrawString(52, 10, "Welcome!");
+		oledDrawString(52, 30, "Please visit");
+		oledDrawString(52, 50, "trezor.io/start");
 	}
 	oledRefresh();
 
