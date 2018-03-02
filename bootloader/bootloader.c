@@ -109,7 +109,7 @@ void bootloader_loop(void)
 	oledDrawBitmap(0, 0, &bmp_logo64);
 	if (firmware_present()) {
 		//oledDrawZh(52,0,"硬件钱包");
-		oledDrawString(52, 0, "TREZOR");
+		oledDrawString(52, 0, "T");
 		static char serial[25];
 		fill_serialno_fixed(serial);
 		//oledDrawZh(52,20,"唯一序列号#:#");
