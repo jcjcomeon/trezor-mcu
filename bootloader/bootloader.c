@@ -121,10 +121,10 @@ void bootloader_loop(void)
 	} else {
 		//oledDrawZh(52,10,"欢迎#！#请使用");
 		//oledDrawZh(52,30,"初始化工具");
-		//oledDrawZh(52,50,"完成钱包设置");
+		oledDrawZh(52,50,"完成钱包设置");
 		oledDrawString(52, 10, "Welcome!");
 		oledDrawString(52, 30, "Please visit");
-		oledDrawString(52, 50, "trezor.io/start");
+		//oledDrawString(52, 50, "trezor.io/start");
 	}
 	oledRefresh();
 
