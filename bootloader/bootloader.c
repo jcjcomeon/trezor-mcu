@@ -54,7 +54,7 @@ void show_halt(void)
 void show_unofficial_warning(const uint8_t *hash)
 {
 	//layoutZhDialog(&bmp_icon_warning, "终止", "承担风险并继续", NULL, "警告#!#", NULL,"检测到非官方固件", "存在风险");
-	layoutDialog(&bmp_icon_warning, "Abort", "I'll take the risk", NULL, "WARNING!", NULL, "Unofficial firmware", "detected.", NULL, NULL);
+	layoutDialog(&bmp_icon_warning, "Abort", "I'll take the risk", NULL, "WARNING!", NULL, NULL, "detected.", NULL, NULL);
 
 	do {
 		delay(100000);
@@ -109,7 +109,7 @@ void bootloader_loop(void)
 	oledDrawBitmap(0, 0, &bmp_logo64);
 	if (firmware_present()) {
 		//oledDrawZh(52,0,"硬件钱包");
-		oledDrawString(52, 0, "T");
+		oledDrawString(52, 0, "TREZOR");
 		static char serial[25];
 		fill_serialno_fixed(serial);
 		//oledDrawZh(52,20,"唯一序列号#:#");
