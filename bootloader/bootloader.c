@@ -40,7 +40,7 @@ void layoutFirmwareHash(const uint8_t *hash)
 	for (int i = 0; i < 4; i++) {
 		data2hex(hash + i * 8, 8, str[i]);
 	}
-	layoutZhDialog(&bmp_icon_question,"终止","继续","请比对哈希值",str[0], str[1], str[2], str[3])
+	layoutZhDialog(&bmp_icon_question,"终止","继续","请比对哈希值",str[0], str[1], str[2], str[3]);
 	//layoutDialog(&bmp_icon_question, "Abort", "Continue", "Compare fingerprints", str[0], str[1], str[2], str[3], NULL, NULL);
 }
 
@@ -108,20 +108,20 @@ void bootloader_loop(void)
 	oledClear();
 	oledDrawBitmap(0, 0, &bmp_logo64);
 	if (firmware_present()) {
-		oledDrawZh(52,0,"硬件钱包")
+		oledDrawZh(52,0,"硬件钱包");
 		//oledDrawString(52, 0, "TREZOR");
 		static char serial[25];
 		fill_serialno_fixed(serial);
-		oledDrawZh(52,20,"唯一序列号#:#")
+		oledDrawZh(52,20,"唯一序列号#:#");
 		//oledDrawString(52, 20, "Serial No.");
 		oledDrawString(52, 40, serial + 12); // second part of serial
 		serial[12] = 0;
 		oledDrawString(52, 30, serial);      // first part of serial
 		oledDrawStringRight(OLED_WIDTH - 1, OLED_HEIGHT - 8, "Loader " VERSTR(VERSION_MAJOR) "." VERSTR(VERSION_MINOR) "." VERSTR(VERSION_PATCH));
 	} else {
-		oledDrawZh(52,10,"欢迎#！#请使用")
-		oledDrawZh(52,30,"初始化工具")
-		oledDrawZh(52,50,"完成钱包设置")
+		oledDrawZh(52,10,"欢迎#！#请使用");
+		oledDrawZh(52,30,"初始化工具");
+		oledDrawZh(52,50,"完成钱包设置");
 		//oledDrawString(52, 10, "Welcome!");
 		//oledDrawString(52, 30, "Please visit");
 		//oledDrawString(52, 50, "trezor.io/start");
