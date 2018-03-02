@@ -53,7 +53,7 @@ void show_halt(void)
 
 void show_unofficial_warning(const uint8_t *hash)
 {
-	layoutZhDialog(&bmp_icon_warning, "终止", "承担风险并继续", NULL, "警告#!#", NULL,"检测到非官方固件", "存在风险");
+	layoutZhDialog(&bmp_icon_warning, "终止", "继续", NULL, "警告#!#", NULL,"检测到非官方固件", "存在风险");
 	//layoutDialog(&bmp_icon_warning, "Abort", "I'll take the risk", NULL, "WARNING!", NULL, "Unofficial firmware", "detected.", NULL, NULL);
 
 	do {
