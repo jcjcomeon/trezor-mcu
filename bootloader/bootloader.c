@@ -40,7 +40,7 @@ void layoutFirmwareHash(const uint8_t *hash)
 	for (int i = 0; i < 4; i++) {
 		data2hex(hash + i * 8, 8, str[i]);
 	}
-	layoutZhDialog(&bmp_icon_question,"终止","继续","请比对哈希值",str[0], str[1], str[2], str[3]);
+	layoutZhDialog(&bmp_icon_question,"终止","继续","比对哈希值",str[0], str[1], str[2], str[3]);
 	//layoutDialog(&bmp_icon_question, "Abort", "Continue", "Compare fingerprints", str[0], str[1], str[2], str[3], NULL, NULL);
 }
 
