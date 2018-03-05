@@ -5,9 +5,9 @@ import os
 fn = sys.argv[1]
 fs = os.stat(fn).st_size
 if fs > 32768:
-	print(fs)
-	raise Exception(fs)
+	#print(fs)
+	#raise Exception(fs)
 	raise Exception('bootloader has to be smaller than 32768 bytes')
-#with open(fn, 'ab') as f:
-#	f.write(b'\xFF' * (32768 - fs))
-#	f.close()
+with open(fn, 'ab') as f:
+	f.write(b'\xFF' * (32768 - fs))
+	f.close()

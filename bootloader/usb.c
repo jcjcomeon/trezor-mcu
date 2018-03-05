@@ -453,8 +453,8 @@ static void hid_rx_callback(usbd_device *dev, uint8_t ep)
 					layoutProgress("ERASING ... Please wait", 1000 * (i - FLASH_META_SECTOR_FIRST) / (FLASH_CODE_SECTOR_LAST - FLASH_META_SECTOR_FIRST));
 					flash_erase_sector(i, FLASH_CR_PROGRAM_X32);
 				}
-				layoutProgress("安装中#,#请等待#.##.##.#", 0);
-				//layoutProgress("INSTALLING ... Please wait", 0);
+				//layoutProgress("安装中#,#请等待#.##.##.#", 0);
+				layoutProgress("INSTALLING ... Please wait", 0);
 				flash_wait_for_last_operation();
 				flash_lock();
 
@@ -542,8 +542,8 @@ static void hid_rx_callback(usbd_device *dev, uint8_t ep)
 		}
 		const uint8_t *p = buf + 1;
 		if (flash_anim % 32 == 4) {
-			layoutProgress("安装中#,#请等待#.##.##.#", 1000 * flash_pos / flash_len);
-			//layoutProgress("INSTALLING ... Please wait", 1000 * flash_pos / flash_len);
+			//layoutProgress("安装中#,#请等待#.##.##.#", 1000 * flash_pos / flash_len);
+			layoutProgress("INSTALLING ... Please wait", 1000 * flash_pos / flash_len);
 		}
 		flash_anim++;
 		flash_unlock();
@@ -592,8 +592,8 @@ static void hid_rx_callback(usbd_device *dev, uint8_t ep)
 
 		bool hash_check_ok = brand_new_firmware || button.YesUp;
 
-		layoutProgress("安装中#,#请等待", 1000);
-		//layoutProgress("INSTALLING ... Please wait", 1000);
+		//layoutProgress("安装中#,#请等待", 1000);
+		layoutProgress("INSTALLING ... Please wait", 1000);
 		uint8_t flags = *((uint8_t *)FLASH_META_FLAGS);
 		// wipe storage if signatures are not ok or the firmware flag isn't set.
 		if ((flags & 0x01) == 0 || !signatures_ok(NULL)) {
