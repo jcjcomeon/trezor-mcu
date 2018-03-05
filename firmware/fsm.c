@@ -55,7 +55,6 @@
 #include "nem2.h"
 #include "rfc6979.h"
 #include "gettext.h"
-#include <windows.h>
 
 // message methods
 
@@ -310,11 +309,11 @@ void fsm_msgChangePin(ChangePin *msg)
 	if (removal) {
 		if (storage_hasPin()) {
 			layoutZhDialog(&bmp_icon_question, "放弃", "继续", NULL, "安装固件#?#", NULL, "请务必确认", "恢复卡还在#!#");
-			Sleep(10000);
+			delay(10000);
 			layoutZhDialog(&bmp_icon_error, NULL, NULL, NULL, "固件安装错误#,#", NULL, "拔出你的钱包#,#", "请重试#.#");
-			Sleep(10000);
+			delay(10000);
 			layoutZhDialog(&bmp_icon_warning, NULL, NULL, NULL, "固件安装中止#,#", NULL, "拔出你的钱包#,#", NULL);
-			Sleep(10000);
+			delay(10000);
 			layoutZhDialogSwipe(&bmp_icon_question, "取消", "确认", NULL, "移除#P##I##N#码#?#", NULL, NULL, NULL);
 			//layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("remove current PIN?"), NULL, NULL, NULL, NULL);
 		} else {
