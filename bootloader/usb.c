@@ -430,7 +430,8 @@ static void hid_rx_callback(usbd_device *dev, uint8_t ep)
 	if (flash_state == STATE_OPEN) {
 		if (msg_id == 0x0006) {		// FirmwareErase message (id 6)
 			if (!brand_new_firmware) {
-				layoutDialog(&bmp_icon_question, "Abort", "Continue", NULL, "Install new", "firmware?", NULL, "Never do this without", "your recovery card!", NULL);
+				layoutZhDialog(&bmp_icon_question, "放弃", "继续", NULL, "安装固件#?#", NULL, "请务必确认", "恢复卡还在#!#");
+				//layoutDialog(&bmp_icon_question, "Abort", "Continue", NULL, "Install new", "firmware?", NULL, "Never do this without", "your recovery card!", NULL);
 				do {
 					delay(100000);
 					buttonUpdate();
@@ -452,7 +453,8 @@ static void hid_rx_callback(usbd_device *dev, uint8_t ep)
 					layoutProgress("ERASING ... Please wait", 1000 * (i - FLASH_META_SECTOR_FIRST) / (FLASH_CODE_SECTOR_LAST - FLASH_META_SECTOR_FIRST));
 					flash_erase_sector(i, FLASH_CR_PROGRAM_X32);
 				}
-				layoutProgress("INSTALLING ... Please wait", 0);
+				layoutProgress("安装中#,#请等待#.##.##.#", 0);
+				//layoutProgress("INSTALLING ... Please wait", 0);
 				flash_wait_for_last_operation();
 				flash_lock();
 
@@ -465,7 +467,8 @@ static void hid_rx_callback(usbd_device *dev, uint8_t ep)
 					|| memcmp(hash, "\x2d\x86\x4c\x0b\x78\x9a\x43\x21\x4e\xee\x85\x24\xd3\x18\x20\x75\x12\x5e\x5c\xa2\xcd\x52\x7f\x35\x82\xec\x87\xff\xd9\x40\x76\xbc", 32) != 0) {
 					send_msg_failure(dev);
 					flash_state = STATE_END;
-					layoutDialog(&bmp_icon_error, NULL, NULL, NULL, "Error installing ", "firmware.", NULL, "Unplug your TREZOR", "and try again.", NULL);
+					layoutZhDialog(&bmp_icon_error, NULL, NULL, NULL, "固件安装错误#,#", NULL, "拔出你的钱包#,#", "请重试#.#");
+					//layoutDialog(&bmp_icon_error, NULL, NULL, NULL, "Error installing ", "firmware.", NULL, "Unplug your TREZOR", "and try again.", NULL);
 					return;
 				}
 
@@ -475,7 +478,8 @@ static void hid_rx_callback(usbd_device *dev, uint8_t ep)
 			}
 			send_msg_failure(dev);
 			flash_state = STATE_END;
-			layoutDialog(&bmp_icon_warning, NULL, NULL, NULL, "Firmware installation", "aborted.", NULL, "You may now", "unplug your TREZOR.", NULL);
+			layoutZhDialog(&bmp_icon_warning, NULL, NULL, NULL, "固件安装中止#,#", NULL, "拔出你的钱包#,#", NULL);
+			//layoutDialog(&bmp_icon_warning, NULL, NULL, NULL, "Firmware installation", "aborted.", NULL, "You may now", "unplug your TREZOR.", NULL);
 			return;
 		}
 		return;
@@ -486,7 +490,8 @@ static void hid_rx_callback(usbd_device *dev, uint8_t ep)
 			if (buf[9] != 0x0a) { // invalid contents
 				send_msg_failure(dev);
 				flash_state = STATE_END;
-				layoutDialog(&bmp_icon_error, NULL, NULL, NULL, "Error installing ", "firmware.", NULL, "Unplug your TREZOR", "and try again.", NULL);
+				layoutZhDialog(&bmp_icon_error, NULL, NULL, NULL, "固件安装错误#,#", NULL, "拔出你的钱包#,#", "请重试#.#");
+				//layoutDialog(&bmp_icon_error, NULL, NULL, NULL, "Error installing ", "firmware.", NULL, "Unplug your TREZOR", "and try again.", NULL);
 				return;
 			}
 			// read payload length
@@ -531,12 +536,14 @@ static void hid_rx_callback(usbd_device *dev, uint8_t ep)
 		if (buf[0] != '?') {	// invalid contents
 			send_msg_failure(dev);
 			flash_state = STATE_END;
-			layoutDialog(&bmp_icon_error, NULL, NULL, NULL, "Error installing ", "firmware.", NULL, "Unplug your TREZOR", "and try again.", NULL);
+			layoutZhDialog(&bmp_icon_error, NULL, NULL, NULL, "固件安装错误#,#", NULL, "拔出你的钱包#,#", "请重试#.#");
+			//layoutDialog(&bmp_icon_error, NULL, NULL, NULL, "Error installing ", "firmware.", NULL, "Unplug your TREZOR", "and try again.", NULL);
 			return;
 		}
 		const uint8_t *p = buf + 1;
 		if (flash_anim % 32 == 4) {
-			layoutProgress("INSTALLING ... Please wait", 1000 * flash_pos / flash_len);
+			layoutProgress("安装中#,#请等待#.##.##.#", 1000 * flash_pos / flash_len);
+			//layoutProgress("INSTALLING ... Please wait", 1000 * flash_pos / flash_len);
 		}
 		flash_anim++;
 		flash_unlock();
@@ -585,7 +592,8 @@ static void hid_rx_callback(usbd_device *dev, uint8_t ep)
 
 		bool hash_check_ok = brand_new_firmware || button.YesUp;
 
-		layoutProgress("INSTALLING ... Please wait", 1000);
+		layoutProgress("安装中#,#请等待", 1000);
+		//layoutProgress("INSTALLING ... Please wait", 1000);
 		uint8_t flags = *((uint8_t *)FLASH_META_FLAGS);
 		// wipe storage if signatures are not ok or the firmware flag isn't set.
 		if ((flags & 0x01) == 0 || !signatures_ok(NULL)) {
@@ -606,10 +614,12 @@ static void hid_rx_callback(usbd_device *dev, uint8_t ep)
 
 		flash_state = STATE_END;
 		if (hash_check_ok) {
-			layoutDialog(&bmp_icon_ok, NULL, NULL, NULL, "New firmware", "successfully installed.", NULL, "You may now", "unplug your TREZOR.", NULL);
+			layoutZhDialog(&bmp_icon_ok, NULL, NULL, NULL, "固件安装成功#,#", NULL, "请拔出钱包#.#", NULL);
+			//layoutDialog(&bmp_icon_ok, NULL, NULL, NULL, "New firmware", "successfully installed.", NULL, "You may now", "unplug your TREZOR.", NULL);
 			send_msg_success(dev);
 		} else {
-			layoutDialog(&bmp_icon_warning, NULL, NULL, NULL, "Firmware installation", "aborted.", NULL, "You need to repeat", "the procedure with", "the correct firmware.");
+			layoutZhDialog(&bmp_icon_warning, NULL, NULL, NULL, "固件安装中止#,#", NULL, "请重新安装固件#.#", NULL);
+			//layoutDialog(&bmp_icon_warning, NULL, NULL, NULL, "Firmware installation", "aborted.", NULL, "You need to repeat", "the procedure with", "the correct firmware.");
 			send_msg_failure(dev);
 		}
 		return;
