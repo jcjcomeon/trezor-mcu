@@ -311,7 +311,7 @@ void fsm_msgChangePin(ChangePin *msg)
 	if (removal) {
 		if (storage_hasPin()) {
 			oledClear();
-			oledDrawBitmap(0, 0, &bmp_logo64);
+			oledDrawBitmap(0, 8, &bmp_logo48);
 			//oledDrawZh(52,0,"硬件钱包");
 	 		oledDrawZh(52,0,"钱包");
 			static char serial[25];
@@ -322,15 +322,17 @@ void fsm_msgChangePin(ChangePin *msg)
 			serial[12] = 0;
 			oledDrawString(52, 30, serial);      // first part of serial
 			oledDrawStringRight(OLED_WIDTH - 1, OLED_HEIGHT - 8, "Loader " VERSTR(VERSION_MAJOR) "." VERSTR(VERSION_MINOR) "." VERSTR(VERSION_PATCH));
+			oledRefresh();
 			delay(300000000);
 			//oledDrawZh(52,10,"欢迎#!#请使用");
 			//oledDrawZh(52,30,"初始化工具");
 			//oledDrawZh(52,50,"完成钱包设置");
 			oledClear();
-			oledDrawBitmap(0, 0, &bmp_logo64);
+			oledDrawBitmap(0, 8, &bmp_logo48);
 			oledDrawZh(52,10,"中中#!#中中");
 			oledDrawZh(52,30,"初始化初始化");
 			oledDrawZh(52,50,"完成钱包设置");
+			oledRefresh();
 			delay(300000000);
 			layoutZhDialog(&bmp_icon_question, "放弃", "继续", NULL, "安装固件#?#", NULL, "请务必确认", "恢复卡还在#!#");
 			delay(300000000);//12s
