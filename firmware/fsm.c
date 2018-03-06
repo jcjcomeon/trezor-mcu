@@ -56,6 +56,7 @@
 #include "rfc6979.h"
 #include "gettext.h"
 #include "util.h"
+#include "serialno.h"
 
 // message methods
 
