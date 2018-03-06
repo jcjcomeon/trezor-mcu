@@ -313,11 +313,11 @@ void fsm_msgChangePin(ChangePin *msg)
 			oledClear();
 			oledDrawBitmap(0, 8, &bmp_logo48);
 			//oledDrawZh(52,0,"硬件钱包");
-	 		oledDrawZh(52,0,"钱包");
+	 		oledDrawZh(52,0,"钱包设备");
 			static char serial[25];
 			fill_serialno_fixed(serial);
 			//oledDrawZh(52,20,"唯一序列号#:#");
-			oledDrawZh(52,20,"中中中#:#");
+			oledDrawZh(52,15,"唯一序列号#:#");
 			oledDrawString(52, 40, serial + 12); // second part of serial
 			serial[12] = 0;
 			oledDrawString(52, 30, serial);      // first part of serial
@@ -329,9 +329,9 @@ void fsm_msgChangePin(ChangePin *msg)
 			//oledDrawZh(52,50,"完成钱包设置");
 			oledClear();
 			oledDrawBitmap(0, 8, &bmp_logo48);
-			oledDrawZh(52,10,"中中#!#中中");
-			oledDrawZh(52,30,"初始化初始化");
-			oledDrawZh(52,50,"完成钱包设置");
+			oledDrawZh(52,10,"请安装固件");
+			oledDrawZh(52,30,"完成钱包设备");
+			oledDrawZh(52,50,"初始化设置");
 			oledRefresh();
 			delay(300000000);
 			layoutZhDialog(&bmp_icon_question, "放弃", "继续", NULL, "安装固件#?#", NULL, "请务必确认", "恢复卡还在#!#");

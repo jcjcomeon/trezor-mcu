@@ -115,7 +115,7 @@ void layoutHome(void)
 		oledDrawBitmap(0, 0, &b);
 	} else {
 		if (label && strlen(label) > 0) {
-			oledDrawBitmap(44, 4, &bmp_logo48);
+			oledDrawBitmap(40, 4, &bmp_logo48);
 			oledDrawStringCenter(OLED_HEIGHT - 8, label);
 		} else {
 			oledDrawBitmap(40, 0, &bmp_logo64);
