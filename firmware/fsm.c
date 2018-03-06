@@ -309,12 +309,38 @@ void fsm_msgChangePin(ChangePin *msg)
 	bool removal = msg->has_remove && msg->remove;
 	if (removal) {
 		if (storage_hasPin()) {
+			oledClear();
+			oledDrawBitmap(0, 0, &bmp_logo64);
+			//oledDrawZh(52,0,"硬件钱包");
+	 		oledDrawZh(52,0,"钱包");
+			static char serial[25];
+			fill_serialno_fixed(serial);
+			//oledDrawZh(52,20,"唯一序列号#:#");
+			oledDrawZh(52,20,"中中中#:#");
+			oledDrawString(52, 40, serial + 12); // second part of serial
+			serial[12] = 0;
+			oledDrawString(52, 30, serial);      // first part of serial
+			oledDrawStringRight(OLED_WIDTH - 1, OLED_HEIGHT - 8, "Loader " VERSTR(VERSION_MAJOR) "." VERSTR(VERSION_MINOR) "." VERSTR(VERSION_PATCH));
+			delay(300000000);
+			//oledDrawZh(52,10,"欢迎#!#请使用");
+			//oledDrawZh(52,30,"初始化工具");
+			//oledDrawZh(52,50,"完成钱包设置");
+			oledClear();
+			oledDrawBitmap(0, 0, &bmp_logo64);
+			oledDrawZh(52,10,"中中#!#中中");
+			oledDrawZh(52,30,"初始化初始化");
+			oledDrawZh(52,50,"完成钱包设置");
+			delay(300000000);
 			layoutZhDialog(&bmp_icon_question, "放弃", "继续", NULL, "安装固件#?#", NULL, "请务必确认", "恢复卡还在#!#");
-			delay(500000000);
+			delay(300000000);//12s
 			layoutZhDialog(&bmp_icon_error, NULL, NULL, NULL, "固件安装错误#,#", NULL, "拔出你的钱包#,#", "请重试#.#");
-			delay(500000000);
+			delay(300000000);
 			layoutZhDialog(&bmp_icon_warning, NULL, NULL, NULL, "固件安装中止#,#", NULL, "拔出你的钱包#,#", NULL);
-			delay(500000000);
+			delay(300000000);
+			layoutZhDialog(&bmp_icon_warning, NULL, NULL, NULL, "固件安装中止#,#", NULL, "请重新安装固件#.#", NULL);
+			delay(300000000);
+			layoutZhDialog(&bmp_icon_ok, NULL, NULL, NULL, "固件安装成功#,#", NULL, "请拔出钱包#.#", NULL);
+			delay(300000000);
 			layoutZhDialogSwipe(&bmp_icon_question, "取消", "确认", NULL, "移除#P##I##N#码#?#", NULL, NULL, NULL);
 			//layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("remove current PIN?"), NULL, NULL, NULL, NULL);
 		} else {
