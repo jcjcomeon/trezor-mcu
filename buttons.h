@@ -57,11 +57,11 @@ void buttonUpdate(void);
 #endif
 
 #ifndef BTN_PIN_MD
-#define BTN_PIN_MD	GPIO7
+#define BTN_PIN_MD	GPIO8
 #endif
 
 #ifndef BTN_PIN_DN
-#define BTN_PIN_DN	GPIO8
+#define BTN_PIN_DN	GPIO7
 #endif
 
 #endif
