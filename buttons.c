@@ -24,7 +24,7 @@ struct buttonState button;
 void buttonUpdate()
 {
 	uint16_t state;
-	static uint16_t last_state = BTN_PIN_YES | BTN_PIN_NO | BTN_PIN_UP | BTN_PIN_MD | BTN_PIN_DN;
+	static uint16_t last_state = BTN_PIN_YES | BTN_PIN_NO | BTN_PIN_UP | BTN_PIN_DN;
 
 	state = gpio_port_read(BTN_PORT);
 
@@ -79,24 +79,6 @@ void buttonUpdate()
 		} else {					// last Up page was up
 			button.UpDown = 0;
 			button.UpUp = false;
-		}
-	}
-
-	if ((state & BTN_PIN_MD) == 0) {	// Middle button is down
-		if ((last_state & BTN_PIN_MD) == 0) {		// last Middle was down
-			if (button.MdDown < 2000000000) button.MdDown++;
-			button.MdUp = false;
-		} else {					// last Middle was up
-			button.MdDown = 0;
-			button.MdUp = false;
-		}
-	} else {				// Middle button is up
-		if ((last_state & BTN_PIN_MD) == 0) {		// last Middle was down
-			button.MdDown = 0;
-			button.MdUp = true;
-		} else {					// last Middle was up
-			button.MdDown = 0;
-			button.MdUp = false;
 		}
 	}
 

@@ -77,7 +77,7 @@ void setup(void)
 	RCC_CR |= RCC_CR_CSSON;
 
 	// set GPIO for buttons
-	gpio_mode_setup(GPIOC, GPIO_MODE_INPUT, GPIO_PUPD_PULLUP, GPIO2 | GPIO5 | GPIO6 | GPIO7 | GPIO8);
+	gpio_mode_setup(GPIOC, GPIO_MODE_INPUT, GPIO_PUPD_PULLUP, GPIO2 | GPIO5 | GPIO6 | GPIO7 );
 
 	// set GPIO for OLED display
 	gpio_mode_setup(GPIOA, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, GPIO4);

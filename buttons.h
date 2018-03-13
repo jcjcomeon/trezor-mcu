@@ -30,8 +30,6 @@ struct buttonState {
 	volatile int NoDown;
 	volatile bool UpUp;
 	volatile int UpDown;
-	volatile bool MdUp;
-	volatile int MdDown;
 	volatile bool DnUp;
 	volatile int DnDown;
 };
@@ -54,10 +52,6 @@ void buttonUpdate(void);
 
 #ifndef BTN_PIN_UP
 #define BTN_PIN_UP	GPIO6
-#endif
-
-#ifndef BTN_PIN_MD
-#define BTN_PIN_MD	GPIO8
 #endif
 
 #ifndef BTN_PIN_DN

@@ -606,7 +606,7 @@ void fsm_msgCipherKeyValue(CipherKeyValue *msg)
 		layoutCipherKeyValue2(encrypt, msg->key, rowindex);
 		bool yesbtn = false;
 		for(;;) {
-			switch(protectButton2(ButtonRequestType_ButtonRequest_Other, false)) {//0, No; 1, Yes; 2, Md; 3, Up; 4,Dn
+			switch(protectButton2(ButtonRequestType_ButtonRequest_Other, false)) {//0, No; 1, Yes; 2, Up; 3, Dn
 				case 0://No
 					fsm_sendFailure(FailureType_Failure_ActionCancelled, "CipherKeyValue cancelled");
 					layoutHome();
@@ -614,15 +614,13 @@ void fsm_msgCipherKeyValue(CipherKeyValue *msg)
 				case 1://Yes
 					yesbtn = true;
 					break;
-				case 2://Mid
-					break;
-				case 3://Up
+				case 2://Up
 					rowindex=rowindex-1;
 					if (rowindex<0)
 						rowindex=0;
 					layoutCipherKeyValue2(encrypt, msg->key, rowindex);
 					break;
-				case 4://Dn
+				case 3://Dn
 					rowindex=rowindex+1;
 					if (rowindex>4)
 						rowindex=4;
@@ -970,7 +968,7 @@ void fsm_msgSignMessage(SignMessage *msg)
 	layoutSignMessage2(msg->message.bytes, msg->message.size, rowindex);
 	bool yesbtn = false;
 	for(;;) {
-		switch(protectButton2(ButtonRequestType_ButtonRequest_ProtectCall, false)) {//0, No; 1, Yes; 2, Md; 3, Up; 4,Dn
+		switch(protectButton2(ButtonRequestType_ButtonRequest_ProtectCall, false)) {//0, No; 1, Yes; 2, Up; 3, Dn
 			case 0://No
 				fsm_sendFailure(FailureType_Failure_ActionCancelled, "Sign message cancelled");
 				layoutHome();
@@ -978,20 +976,18 @@ void fsm_msgSignMessage(SignMessage *msg)
 			case 1://Yes
 				yesbtn = true;
 				break;
-			case 2://Mid
-				break;
-			case 3://Up
+			case 2://Up
 				rowindex=rowindex-1;
 				if (rowindex<0)
 					rowindex=0;
 				layoutSignMessage2(msg->message.bytes, msg->message.size, rowindex);
 				break;
-			case 4://Dn
+			case 3://Dn
 				rowindex=rowindex+1;
 				if (rowindex>4)
 					rowindex=4;
 				layoutSignMessage2(msg->message.bytes, msg->message.size, rowindex);
-				break;
+				break;			
 			default:
 				break;
 		}
@@ -1050,26 +1046,24 @@ void fsm_msgVerifyMessage(VerifyMessage *msg)
 		layoutVerifyMessage2(msg->message.bytes, msg->message.size, rowindex);
 		bool yesbtn = false;
 		for(;;) {
-			switch(protectButton2(ButtonRequestType_ButtonRequest_Other, true)) {//0, No; 1, Yes; 2, Md; 3, Up; 4,Dn
+			switch(protectButton2(ButtonRequestType_ButtonRequest_Other, true)) {//0, No; 1, Yes; 2, Up; 3, Dn
 				case 0://No
 					break;
 				case 1://Yes
 					yesbtn = true;
 					break;
-				case 2://Mid
-					break;
-				case 3://Up
+				case 2://Up
 					rowindex=rowindex-1;
 					if (rowindex<0)
 						rowindex=0;
 					layoutVerifyMessage2(msg->message.bytes, msg->message.size, rowindex);
 					break;
-				case 4://Dn
+				case 3://Dn
 					rowindex=rowindex+1;
 					if (rowindex>4)
 						rowindex=4;
 					layoutVerifyMessage2(msg->message.bytes, msg->message.size, rowindex);
-					break;
+					break;				
 				default:
 					break;
 			}

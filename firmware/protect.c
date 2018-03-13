@@ -111,7 +111,7 @@ bool protectButton(ButtonRequestType type, bool confirm_only)
 int protectButton2(ButtonRequestType type, bool confirm_only)
 {
 	ButtonRequest resp;
-	int result = 0;//0, No; 1, Yes; 2, Md; 3, Up; 4,Dn
+	int result = 0;//0, No; 1, Yes; 2, Up; 3, Dn
 	bool acked = false;
 #if DEBUG_LINK
 	bool debug_decided = false;
@@ -140,16 +140,12 @@ int protectButton2(ButtonRequestType type, bool confirm_only)
 				result = 1;
 				break;
 			}
-			if (button.MdUp) {
+			if (button.UpUp) {
 				result = 2;
 				break;
 			}
-			if (button.UpUp) {
-				result = 3;
-				break;
-			}
 			if (button.DnUp) {
-				result = 4;
+				result = 3;
 				break;
 			}
 			if (!confirm_only && button.NoUp) {
