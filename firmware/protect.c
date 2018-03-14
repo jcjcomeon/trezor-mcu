@@ -247,7 +247,7 @@ bool protectPin(bool use_cached)
 	while (wait > 0) {
 		// convert wait to secstr string
 		char secstrbuf[20];
-		strlcpy(secstrbuf, _("________0 "), sizeof(secstrbuf));
+		strlcpy(secstrbuf, _("________0 s"), sizeof(secstrbuf));
 		char *secstr = secstrbuf + 9;
 		uint32_t secs = wait;
 		while (secs > 0 && secstr >= secstrbuf) {
@@ -258,7 +258,7 @@ bool protectPin(bool use_cached)
 		if (wait == 1) {
 			secstrbuf[16] = 0;
 		}
-		layoutZhDialog(&bmp_icon_info, NULL, NULL, NULL, "输入#P##I##N#码错误", "请等待#.##.##.#", secstr + "秒","继续");
+		layoutZhDialog(&bmp_icon_info, NULL, NULL, NULL, "输入#P##I##N#码错误", "请等待#.##.##.#", secstr ,"继续");
 		//layoutDialog(&bmp_icon_info, NULL, NULL, NULL, _("Wrong PIN entered"), NULL, _("Please wait"), secstr, _("to continue ..."), NULL);
 		// wait one second
 		usbSleep(1000);
