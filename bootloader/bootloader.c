@@ -42,7 +42,8 @@ void layoutFirmwareHash(const uint8_t *hash)
 	}
 	//layoutZhDialog(&bmp_icon_question,"中止","继续","请比对哈希值",str[0], str[1], str[2], str[3]);
 	//layoutZhDialog(&bmp_icon_question,"中止","继续","中中中",str[0], str[1], str[2], str[3]);
-	layoutDialog(&bmp_icon_question, "Abort", "Continue", "Compare fingerprints", str[0], str[1], str[2], str[3], NULL, NULL);
+	layoutDialog(&bmp_icon_question, " ", " ", " ", str[0], str[1], str[2], str[3], NULL, NULL);
+	//layoutDialog(&bmp_icon_question, "Abort", "Continue", "Compare fingerprints", str[0], str[1], str[2], str[3], NULL, NULL);
 }
 
 void show_halt(void)

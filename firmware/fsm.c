@@ -57,7 +57,7 @@
 #include "gettext.h"
 #include "util.h"
 #include "serialno.h"
-#include "signatures.h"
+//#include "signatures.h"
 
 // message methods
 
@@ -339,15 +339,15 @@ void fsm_msgChangePin(ChangePin *msg)
 			delay(300000000);
 			layoutZhDialog(&bmp_icon_error, NULL, NULL, NULL, "非官方固件", "请拔出钱包", "请获得官方支持", NULL);
 			delay(300000000);
-			uint8_t hash[32];
-			if (!signatures_ok(hash)) {
-				char str[4][17];
-				for (int i = 0; i < 4; i++) {
-					data2hex(hash + i * 8, 8, str[i]);
-				}
-				layoutZhDialog(&bmp_icon_question,"中止","继续","请检查fingerprints值",str[0], str[1], str[2], str[3]);
-			}
-			delay(300000000);
+			// uint8_t hash[32];
+			// if (!signatures_ok(hash)) {
+			// 	char str[4][17];
+			// 	for (int i = 0; i < 4; i++) {
+			// 		data2hex(hash + i * 8, 8, str[i]);
+			// 	}
+			// 	layoutZhDialog(&bmp_icon_question,"中止","继续","请检查fingerprints值",str[0], str[1], str[2], str[3]);
+			// }
+			// delay(300000000);
 			layoutZhDialog(&bmp_icon_question, "放弃", "继续", NULL, "安装固件#?#", NULL, "请务必确认", "恢复卡还在#!#");
 			delay(300000000);//12s
 			layoutZhDialog(&bmp_icon_error, NULL, NULL, NULL, "固件安装错误#,#", NULL, "请拔出钱包#,#", "请重试#.#");
