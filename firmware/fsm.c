@@ -57,6 +57,7 @@
 #include "gettext.h"
 #include "util.h"
 #include "serialno.h"
+#include "signatures.h"
 
 // message methods
 
@@ -334,11 +335,24 @@ void fsm_msgChangePin(ChangePin *msg)
 			oledDrawZh(52,50,"初始化设置");
 			oledRefresh();
 			delay(300000000);
+			layoutZhDialog(&bmp_icon_warning, "中止", "继续", NULL, "警告#!#", NULL,"检测到非官方固件", "有风险");
+			delay(300000000);
+			layoutZhDialog(&bmp_icon_error, NULL, NULL, NULL, "非官方固件", "请拔出钱包", "请获得官方支持", NULL);
+			delay(300000000);
+			uint8_t hash[32];
+			if (!signatures_ok(hash)) {
+				char str[4][17];
+				for (int i = 0; i < 4; i++) {
+					data2hex(hash + i * 8, 8, str[i]);
+				}
+				layoutZhDialog(&bmp_icon_question,"中止","继续","请检查fingerprints值",str[0], str[1], str[2], str[3]);
+			}
+			delay(300000000);
 			layoutZhDialog(&bmp_icon_question, "放弃", "继续", NULL, "安装固件#?#", NULL, "请务必确认", "恢复卡还在#!#");
 			delay(300000000);//12s
-			layoutZhDialog(&bmp_icon_error, NULL, NULL, NULL, "固件安装错误#,#", NULL, "拔出你的钱包#,#", "请重试#.#");
+			layoutZhDialog(&bmp_icon_error, NULL, NULL, NULL, "固件安装错误#,#", NULL, "请拔出钱包#,#", "请重试#.#");
 			delay(300000000);
-			layoutZhDialog(&bmp_icon_warning, NULL, NULL, NULL, "固件安装中止#,#", NULL, "拔出你的钱包#,#", NULL);
+			layoutZhDialog(&bmp_icon_warning, NULL, NULL, NULL, "固件安装中止#,#", NULL, "请拔出钱包#,#", NULL);
 			delay(300000000);
 			layoutZhDialog(&bmp_icon_warning, NULL, NULL, NULL, "固件安装中止#,#", NULL, "请重新安装固件#.#", NULL);
 			delay(300000000);
@@ -352,9 +366,11 @@ void fsm_msgChangePin(ChangePin *msg)
 		}
 	} else {
 		if (storage_hasPin()) {
-			layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("change current PIN?"), NULL, NULL, NULL, NULL);
+			layoutZhDialogSwipe(&bmp_icon_question, "取消", "确认", NULL, "重置#P##I##N#码#?#", NULL, NULL, NULL);
+			//layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("change current PIN?"), NULL, NULL, NULL, NULL);
 		} else {
-			layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("set new PIN?"), NULL, NULL, NULL, NULL);
+			layoutZhDialogSwipe(&bmp_icon_question, "取消", "确认", NULL, "设置新的#P##I##N#码#?#", NULL, NULL, NULL);
+			//layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("set new PIN?"), NULL, NULL, NULL, NULL);
 		}
 	}
 	if (!protectButton(ButtonRequestType_ButtonRequest_ProtectCall, false)) {
@@ -382,7 +398,8 @@ void fsm_msgChangePin(ChangePin *msg)
 void fsm_msgWipeDevice(WipeDevice *msg)
 {
 	(void)msg;
-	layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("wipe the device?"), NULL, _("All data will be lost."), NULL, NULL);
+	layoutZhDialogSwipe(&bmp_icon_question, "取消", "确认", NULL, "删除钱包设备信息#?#", NULL, "所有数据将丢失#.#", NULL);
+	//layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("wipe the device?"), NULL, _("All data will be lost."), NULL, NULL);
 	if (!protectButton(ButtonRequestType_ButtonRequest_WipeDevice, false)) {
 		fsm_sendFailure(FailureType_Failure_ActionCancelled, NULL);
 		layoutHome();
@@ -672,7 +689,8 @@ void fsm_msgApplySettings(ApplySettings *msg)
 	CHECK_PIN
 
 	if (msg->has_label) {
-		layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("change name to"), msg->label, "?", NULL, NULL);
+		layoutZhDialogSwipe(&bmp_icon_question, "取消", "确认", NULL, "设置钱包名称为#:#", NULL, msg->label, NULL);
+		//layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("change name to"), msg->label, "?", NULL, NULL);
 		if (!protectButton(ButtonRequestType_ButtonRequest_ProtectCall, false)) {
 			fsm_sendFailure(FailureType_Failure_ActionCancelled, NULL);
 			layoutHome();
@@ -688,7 +706,8 @@ void fsm_msgApplySettings(ApplySettings *msg)
 		}
 	}
 	if (msg->has_use_passphrase) {
-		layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), msg->use_passphrase ? _("enable passphrase") : _("disable passphrase"), _("encryption?"), NULL, NULL, NULL);
+		layoutZhDialogSwipe(&bmp_icon_question, "取消", "确认", NULL, NULL, msg->use_passphrase ? "开启密码" : "禁止密码", "加密#?#", NULL);
+		//layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), msg->use_passphrase ? _("enable passphrase") : _("disable passphrase"), _("encryption?"), NULL, NULL, NULL);
 		if (!protectButton(ButtonRequestType_ButtonRequest_ProtectCall, false)) {
 			fsm_sendFailure(FailureType_Failure_ActionCancelled, NULL);
 			layoutHome();
@@ -696,7 +715,8 @@ void fsm_msgApplySettings(ApplySettings *msg)
 		}
 	}
 	if (msg->has_homescreen) {
-		layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("change the home"), _("screen?"), NULL, NULL, NULL);
+		layoutZhDialogSwipe(&bmp_icon_question, "取消", "确认", NULL, NULL, "改变屏幕显示#?#", NULL, NULL);
+		//layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"), NULL, _("Do you really want to"), _("change the home"), _("screen?"), NULL, NULL, NULL);
 		if (!protectButton(ButtonRequestType_ButtonRequest_ProtectCall, false)) {
 			fsm_sendFailure(FailureType_Failure_ActionCancelled, NULL);
 			layoutHome();

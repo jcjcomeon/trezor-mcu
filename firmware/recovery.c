@@ -100,18 +100,24 @@ static uint8_t word_matrix[9];
  */
 static void format_number(char *dest, int number) {
 	if (number < 10) {
-		dest[0] = ' ';
-	} else {
-		dest[0] = '0' + number / 10;
-	}
-	dest[1] = '0' + number % 10;
-	if (number == 1 || number == 21) {
-		dest[2] = 's'; dest[3] = 't';
-	} else if (number == 2 || number == 22) {
-		dest[2] = 'n'; dest[3] = 'd';
-	} else if (number == 3 || number == 23) {
-		dest[2] = 'r'; dest[3] = 'd';
-	}
+				dest[4] = '0' + word_pos % 10; 
+			} else {
+				dest[4] = '0' + word_pos / 10; 
+				dest[7] = '0' + word_pos % 10;    
+			}
+	// if (number < 10) {
+	// 	dest[0] = ' ';
+	// } else {
+	// 	dest[0] = '0' + number / 10;
+	// }
+	// dest[1] = '0' + number % 10;
+	// if (number == 1 || number == 21) {
+	// 	dest[2] = 's'; dest[3] = 't';
+	// } else if (number == 2 || number == 22) {
+	// 	dest[2] = 'n'; dest[3] = 'd';
+	// } else if (number == 3 || number == 23) {
+	// 	dest[2] = 'r'; dest[3] = 'd';
+	// }
 }
 
 /* Send a request for a new word/matrix code to the PC.
@@ -244,15 +250,28 @@ static void display_choices(bool twoColumn, char choices[9][12], int num)
 	/* scramble matrix */
 	random_permute((char*)word_matrix, displayedChoices);
 
+	// if (word_index % 4 == 0) {
+	// 	char desc[] = "##th word";
+	// 	int nr = (word_index / 4) + 1;
+	// 	format_number(desc, nr);
+	// 	layoutDialogSwipe(&bmp_icon_info, NULL, NULL, NULL, _("Please enter the"), (nr < 10 ? desc + 1 : desc), _("of your mnemonic"), NULL, NULL, NULL);
+	// } else {
+	// 	oledBox(0, 27, 127, 63, false);
+	// }
 	if (word_index % 4 == 0) {
-		char desc[] = "##th word";
-		int nr = (word_index / 4) + 1;
-		format_number(desc, nr);
-		layoutDialogSwipe(&bmp_icon_info, NULL, NULL, NULL, _("Please enter the"), (nr < 10 ? desc + 1 : desc), _("of your mnemonic"), NULL, NULL, NULL);
+		word_pos = word_order[word_index];
+		char zhunitdesc[] = "第# #个单词";
+		char zhdesc[] = "第# ## #个单词";
+		if (word_pos < 10) {
+			zhunitdesc[4] = '0' + word_pos % 10; 
+		} else {
+			zhdesc[4] = '0' + word_pos / 10; 
+			zhdesc[7] = '0' + word_pos % 10;    
+		}
+		layoutZhDialogSwipe(&bmp_icon_info, NULL, NULL, NULL, "请输入您", "备份种子单词的", (word_pos < 10 ? zhunitdesc : zhdesc), NULL);
 	} else {
 		oledBox(0, 27, 127, 63, false);
 	}
-
 	for (int row = 0; row < 3; row ++) {
 		int y = 55 - row * 11;
 		for (int col = 0; col < nColumns; col++) {
@@ -394,12 +413,22 @@ void next_word(void) {
 	if (word_pos == 0) {
 		const char * const *wl = mnemonic_wordlist();
 		strlcpy(fake_word, wl[random_uniform(2048)], sizeof(fake_word));
-		layoutDialogSwipe(&bmp_icon_info, NULL, NULL, NULL, _("Please enter the word"), NULL, fake_word, NULL, _("on your computer"), NULL);
+		layoutZhDialogSwipe(&bmp_icon_info, NULL, NULL, NULL, "请输入单词", NULL, fake_word, NULL);
+		//layoutDialogSwipe(&bmp_icon_info, NULL, NULL, NULL, _("Please enter the word"), NULL, fake_word, NULL, _("on your computer"), NULL);
 	} else {
 		fake_word[0] = 0;
-		char desc[] = "##th word";
-		format_number(desc, word_pos);
-		layoutDialogSwipe(&bmp_icon_info, NULL, NULL, NULL, _("Please enter the"), NULL, (word_pos < 10 ? desc + 1 : desc), NULL, _("of your mnemonic"), NULL);
+		//char desc[] = "##th word";
+		char zhunitdesc[] = "第# #个单词";
+		char zhdesc[] = "第# ## #个单词";
+		//format_number(desc, word_pos);
+		if (word_pos < 10) {
+				zhunitdesc[4] = '0' + word_pos % 10; 
+			} else {
+				zhdesc[4] = '0' + word_pos / 10; 
+				zhdesc[7] = '0' + word_pos % 10;    
+			}
+		layoutZhDialogSwipe(&bmp_icon_info, NULL, NULL, NULL, "请输入备份单词组", NULL, (word_pos < 10 ? zhunitdesc : zhdesc), NULL);
+		//layoutDialogSwipe(&bmp_icon_info, NULL, NULL, NULL, _("Please enter the"), NULL, (word_pos < 10 ? desc + 1 : desc), NULL, _("of your mnemonic"), NULL);
 	}
 	recovery_request();
 }

@@ -149,17 +149,18 @@ void layoutConfirmOutput(const CoinInfo *coin, const TxOutputType *out)
 	}
 	strlcpy(lines[1], addr, linelen + 1);
 	addr += linelen;
-	layoutDialogSwipe(&bmp_icon_question,
-		_("Cancel"),
-		_("Confirm"),
-		NULL,
-		_("Confirm sending"),
-		str_out,
-		lines[0],
-		lines[1],
-		addr,
-		NULL
-	);
+	layoutZhDialog(&bmp_icon_question, "取消" , "确认" , NULL ,	str_out , "发送到#:#" , lines[1] ,addr	);
+	// layoutDialogSwipe(&bmp_icon_question,
+	// 	_("Cancel"),
+	// 	_("Confirm"),
+	// 	NULL,
+	// 	_("Confirm sending"),
+	// 	str_out,
+	// 	lines[0],
+	// 	lines[1],
+	// 	addr,
+	// 	NULL
+	// );
 }
 
 void layoutConfirmOpReturn(const uint8_t *data, uint32_t size)
@@ -198,34 +199,36 @@ void layoutConfirmTx(const CoinInfo *coin, uint64_t amount_out, uint64_t amount_
 	char str_out[32], str_fee[32];
 	bn_format_uint64(amount_out, NULL, coin->coin_shortcut, BITCOIN_DIVISIBILITY, 0, false, str_out, sizeof(str_out));
 	bn_format_uint64(amount_fee, NULL, coin->coin_shortcut, BITCOIN_DIVISIBILITY, 0, false, str_fee, sizeof(str_fee));
-	layoutDialogSwipe(&bmp_icon_question,
-		_("Cancel"),
-		_("Confirm"),
-		NULL,
-		_("Really send"),
-		str_out,
-		_("from your wallet?"),
-		_("Fee included:"),
-		str_fee,
-		NULL
-	);
+	layoutZhDialog(&bmp_icon_question, 	"取消", "确认",	NULL,"你的钱包将发送#:#",	str_out, "手续费为#:#",	str_fee	);
+	// layoutDialogSwipe(&bmp_icon_question,
+	// 	_("Cancel"),
+	// 	_("Confirm"),
+	// 	NULL,
+	// 	_("Really send"),
+	// 	str_out,
+	// 	_("from your wallet?"),
+	// 	_("Fee included:"),
+	// 	str_fee,
+	// 	NULL
+	// );
 }
 
 void layoutFeeOverThreshold(const CoinInfo *coin, uint64_t fee)
 {
 	char str_fee[32];
 	bn_format_uint64(fee, NULL, coin->coin_shortcut, BITCOIN_DIVISIBILITY, 0, false, str_fee, sizeof(str_fee));
-	layoutDialogSwipe(&bmp_icon_question,
-		_("Cancel"),
-		_("Confirm"),
-		NULL,
-		_("Fee"),
-		str_fee,
-		_("is unexpectedly high."),
-		NULL,
-		_("Send anyway?"),
-		NULL
-	);
+	layoutZhDialog(&bmp_icon_question, 	"取消", "确认",	NULL, str_out, 	"的手续费过高", NULL, "确认发送吗#?#"	);
+	// layoutDialogSwipe(&bmp_icon_question,
+	// 	_("Cancel"),
+	// 	_("Confirm"),
+	// 	NULL,
+	// 	_("Fee"),
+	// 	str_fee,
+	// 	_("is unexpectedly high."),
+	// 	NULL,
+	// 	_("Send anyway?"),
+	// 	NULL
+	// );
 }
 
 // split longer string into 8 rows, rowlen chars each and return only 4 rows from rowindex to rowindex+3
@@ -281,74 +284,101 @@ const char **split_message2(const uint8_t *msg, uint32_t len, uint32_t rowlen, i
 void layoutSignMessage(const uint8_t *msg, uint32_t len)
 {
 	const char **str = split_message(msg, len, 16);
-	layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"),
-		_("Sign message?"),
-		str[0], str[1], str[2], str[3], NULL, NULL);
+	layoutZhDialogSwipe(&bmp_icon_question, "取消", "确认",
+					"签名消息#?#",
+					str[0], str[1], str[2], str[3]);
+	// layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"),
+	// 	_("Sign message?"),
+	// 	str[0], str[1], str[2], str[3], NULL, NULL);
 }
 
 void layoutSignMessage2(const uint8_t *msg, uint32_t len, int rowindex)
 {
 	const char **str = split_message2(msg, len, 16, rowindex);
-	layoutDialog(&bmp_icon_question, "Cancel", "Confirm",
-		"Sign message?",
-		str[0], str[1], str[2], str[3], NULL, NULL);
+	layoutZhDialog(&bmp_icon_question, "取消", "确认",
+					"签名消息#?#",
+					str[0], str[1], str[2], str[3]);
+	// layoutDialog(&bmp_icon_question, "Cancel", "Confirm",
+	// 	"Sign message?",
+	// 	str[0], str[1], str[2], str[3], NULL, NULL);
 }
 
 void layoutVerifyAddress(const char *address)
 {
 	const char **str = split_message((const uint8_t *)address, strlen(address), 17);
-	layoutDialogSwipe(&bmp_icon_info, _("Cancel"), _("Confirm"),
-		_("Confirm address?"),
-		_("Message signed by:"),
-		str[0], str[1], str[2], NULL, NULL);
+	layoutZhDialogSwipe(&bmp_icon_info, "取消", "确认", 
+					"验证这个账户", "签名的消息#?#"
+					str[0], str[1], str[2]);
+	// layoutDialogSwipe(&bmp_icon_info, _("Cancel"), _("Confirm"),
+	// 	_("Confirm address?"),
+	// 	_("Message signed by:"),
+	// 	str[0], str[1], str[2], NULL, NULL);
 }
 
 void layoutVerifyMessage(const uint8_t *msg, uint32_t len)
 {
 	const char **str = split_message(msg, len, 16);
-	layoutDialogSwipe(&bmp_icon_info, _("Cancel"), _("Confirm"),
-		_("Verified message"),
-		str[0], str[1], str[2], str[3], NULL, NULL);
+	layoutZhDialogSwipe(&bmp_icon_info, "取消", "确认", 
+					"验证消息#?#",
+					str[0], str[1], str[2], str[3]);
+	// layoutDialogSwipe(&bmp_icon_info, _("Cancel"), _("Confirm"),
+	// 	_("Verified message"),
+	// 	str[0], str[1], str[2], str[3], NULL, NULL);
 }
 
 void layoutVerifyMessage2(const uint8_t *msg, uint32_t len, int rowindex)
 {
 	const char **str = split_message2(msg, len, 16, rowindex);
-	layoutDialog(&bmp_icon_info, NULL, "OK",
-		"Verified message",
-		str[0], str[1], str[2], str[3], NULL, NULL);
+	layoutZhDialogSwipe(&bmp_icon_info, "取消", "确认", 
+					"验证消息#?#",
+					str[0], str[1], str[2], str[3]);
+	// layoutDialog(&bmp_icon_info, NULL, "OK",
+	// 	"Verified message",
+	// 	str[0], str[1], str[2], str[3], NULL, NULL);
 }
 
 void layoutCipherKeyValue(bool encrypt, const char *key)
 {
 	const char **str = split_message((const uint8_t *)key, strlen(key), 16);
-	layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"),
-		encrypt ? _("Encrypt value of this key?") : _("Decrypt value of this key?"),
-		str[0], str[1], str[2], str[3], NULL, NULL);
+	layoutZhDialogSwipe(&bmp_icon_question, "取消", "确认",
+					encrypt ? "编码键值#?#" : "解码键值#?#",
+					str[0], str[1], str[2], str[3]);
+	// layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"),
+	// 	encrypt ? _("Encrypt value of this key?") : _("Decrypt value of this key?"),
+	// 	str[0], str[1], str[2], str[3], NULL, NULL);
 }
 
 void layoutCipherKeyValue2(bool encrypt, const char *key, int rowindex)
 {
 	const char **str = split_message2((const uint8_t *)key, strlen(key), 16, rowindex);
-	layoutDialog(&bmp_icon_question, "Cancel", "Confirm",
-		encrypt ? "Encode value of this key?" : "Decode value of this key?",
-		str[0], str[1], str[2], str[3], NULL, NULL);
+	layoutZhDialogSwipe(&bmp_icon_question, "取消", "确认",
+					encrypt ? "编码键值#?#" : "解码键值#?#",
+					str[0], str[1], str[2], str[3]);
+	// layoutDialog(&bmp_icon_question, "Cancel", "Confirm",
+	// 	encrypt ? "Encode value of this key?" : "Decode value of this key?",
+	// 	str[0], str[1], str[2], str[3], NULL, NULL);
 }
 
 void layoutEncryptMessage(const uint8_t *msg, uint32_t len, bool signing)
 {
 	const char **str = split_message(msg, len, 16);
-	layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"),
-		signing ? _("Encrypt+Sign message?") : _("Encrypt message?"),
-		str[0], str[1], str[2], str[3], NULL, NULL);
+	layoutZhDialogSwipe(&bmp_icon_question, "取消", "确认", 
+					signing ? "加密签名消息" : "加密消息", 
+					str[0], str[1], str[2], str[3]);
+	// layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"),
+	// 	signing ? _("Encrypt+Sign message?") : _("Encrypt message?"),
+	// 	str[0], str[1], str[2], str[3], NULL, NULL);
 }
 
 void layoutDecryptMessage(const uint8_t *msg, uint32_t len, const char *address)
 {
 	const char **str = split_message(msg, len, 16);
-	layoutDialogSwipe(&bmp_icon_info, NULL, _("OK"),
-		address ? _("Decrypted signed message") : _("Decrypted message"),
-		str[0], str[1], str[2], str[3], NULL, NULL);
+	layoutZhDialogSwipe(&bmp_icon_info, NULL, "确认", 
+					address ? "解密签名的消息" : "解密消息", 
+					str[0], str[1], str[2], str[3]);
+	// layoutDialogSwipe(&bmp_icon_info, NULL, _("OK"),
+	// 	address ? _("Decrypted signed message") : _("Decrypted message"),
+	// 	str[0], str[1], str[2], str[3], NULL, NULL);
 }
 
 void layoutResetWord(const char *word, int pass, int word_pos, bool last)
@@ -359,49 +389,66 @@ void layoutResetWord(const char *word, int pass, int word_pos, bool last)
 	const char *btnYes;
 	if (last) {
 		if (pass == 1) {
-			btnYes = _("Finish");
+			btnYes = "完成";
+			//btnYes = _("Finish");
 		} else {
-			btnYes = _("Again");
+			btnYes = "再一次检查";
+			//btnYes = _("Again");
 		}
 	} else {
-		btnYes = _("Next");
+		btnYes = "下一个";
+		//btnYes = _("Next");
 	}
 
 	const char *action;
 	if (pass == 1) {
-		action = _("Please check the seed");
+		action = "请检查种子单词";
+		//action = _("Please check the seed");
 	} else {
-		action = _("Write down the seed");
+		action = "请记录种子单词";
+		//action = _("Write down the seed");
 	}
 
-	char index_str[] = "##th word is:";
+	//char index_str[] = "##th word is:";
+	char zhunitdesc[] = "第# #个";
+	char zhdesc[] = "第# ## #个";
+
 	if (word_pos < 10) {
-		index_str[0] = ' ';
+		zhunitdesc[4] = '0' + word_pos % 10;
 	} else {
-		index_str[0] = '0' + word_pos / 10;
+		zhdesc[4] = '0' + word_pos / 10;
+		zhdesc[7] = '0' + word_pos % 10;	
 	}
-	index_str[1] = '0' + word_pos % 10;
-	if (word_pos == 1 || word_pos == 21) {
-		index_str[2] = 's'; index_str[3] = 't';
-	} else
-	if (word_pos == 2 || word_pos == 22) {
-		index_str[2] = 'n'; index_str[3] = 'd';
-	} else
-	if (word_pos == 3 || word_pos == 23) {
-		index_str[2] = 'r'; index_str[3] = 'd';
-	}
+	// if (word_pos < 10) {
+	// 	index_str[0] = ' ';
+	// } else {
+	// 	index_str[0] = '0' + word_pos / 10;
+	// }
+	// index_str[1] = '0' + word_pos % 10;
+	// if (word_pos == 1 || word_pos == 21) {
+	// 	index_str[2] = 's'; index_str[3] = 't';
+	// } else
+	// if (word_pos == 2 || word_pos == 22) {
+	// 	index_str[2] = 'n'; index_str[3] = 'd';
+	// } else
+	// if (word_pos == 3 || word_pos == 23) {
+	// 	index_str[2] = 'r'; index_str[3] = 'd';
+	// }
 
 	int left = 0;
 	oledClear();
 	oledDrawBitmap(0, 0, &bmp_icon_info);
 	left = bmp_icon_info.width + 4;
 
-	oledDrawString(left, 0 * 9, action);
-	oledDrawString(left, 2 * 9, word_pos < 10 ? index_str + 1 : index_str);
+	oledDrawZh(left, 0 * 9, action);
+	//oledDrawString(left, 0 * 9, action);
+	oledDrawZh(left, 2 * 9, word_pos < 10 ? zhunitdesc  : zhdesc);
+	//oledDrawString(left, 2 * 9, word_pos < 10 ? index_str + 1 : index_str);
 	oledDrawStringDouble(left, 3 * 9, word);
 	oledHLine(OLED_HEIGHT - 13);
 	oledDrawString(OLED_WIDTH - fontCharWidth('\x06') - 1, OLED_HEIGHT - 8, "\x06");
-	oledDrawString(OLED_WIDTH - oledStringWidth(btnYes) - fontCharWidth('\x06') - 3, OLED_HEIGHT - 8, btnYes);
+	oledDrawZh(OLED_WIDTH - oledStringWidth(btnYes) - fontCharWidth('\x06') - 3, OLED_HEIGHT - 8, btnYes);
+	//oledDrawString(OLED_WIDTH - oledStringWidth(btnYes) - fontCharWidth('\x06') - 3, OLED_HEIGHT - 8, btnYes);
 	oledInvert(OLED_WIDTH - oledStringWidth(btnYes) - fontCharWidth('\x06') - 4, OLED_HEIGHT - 9, OLED_WIDTH - 1, OLED_HEIGHT - 1);
 	oledRefresh();
 }
@@ -647,14 +694,20 @@ void layoutSignIdentity(const IdentityType *identity, const char *challenge)
 		}
 	}
 
-	layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"),
-		_("Do you want to sign in?"),
-		row_proto[0] ? row_proto : NULL,
-		row_hostport[0] ? row_hostport : NULL,
-		row_user[0] ? row_user : NULL,
-		challenge,
-		NULL,
-		NULL);
+	layoutZhDialogSwipe(&bmp_icon_question, "取消", "确认",
+					"用这个身份签名?",
+					row_proto[0] ? row_proto : NULL,
+					row_hostport[0] ? row_hostport : NULL,
+					row_user[0] ? row_user : NULL,
+					challenge);
+	// layoutDialogSwipe(&bmp_icon_question, _("Cancel"), _("Confirm"),
+	// 	_("Do you want to sign in?"),
+	// 	row_proto[0] ? row_proto : NULL,
+	// 	row_hostport[0] ? row_hostport : NULL,
+	// 	row_user[0] ? row_user : NULL,
+	// 	challenge,
+	// 	NULL,
+	// 	NULL);
 }
 
 void layoutDecryptIdentity(const IdentityType *identity)
