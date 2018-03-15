@@ -445,7 +445,8 @@ void layoutResetWord(const char *word, int pass, int word_pos, bool last)
 	//oledDrawString(left, 0 * 9, action);
 	oledDrawZh(left, 16, word_pos < 10 ? zhunitdesc  : zhdesc);
 	//oledDrawString(left, 2 * 9, word_pos < 10 ? index_str + 1 : index_str);
-	oledDrawStringDouble(left, 3 * 9, word);
+	oledDrawStringDouble(left, 30, word);
+	//oledDrawStringDouble(left, 3 * 9, word);
 	oledHLine(OLED_HEIGHT - 13);
 	oledDrawString(OLED_WIDTH - fontCharWidth('\x06') - 1, OLED_HEIGHT - 8, "\x06");
 	oledDrawZh(OLED_WIDTH - ((strlen(btnYes) / 3) * 12) - 8 - 1, OLED_HEIGHT - 12, btnYes);
