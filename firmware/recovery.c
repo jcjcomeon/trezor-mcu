@@ -98,27 +98,27 @@ static uint8_t word_matrix[9];
  * start with "##th".  The number is written in place.
  * Parameter number gives the number that we should format.
  */
-static void format_number(char *dest, int number) {
-	if (number < 10) {
-				dest[4] = '0' + word_pos % 10; 
-			} else {
-				dest[4] = '0' + word_pos / 10; 
-				dest[7] = '0' + word_pos % 10;    
-			}
-	// if (number < 10) {
-	// 	dest[0] = ' ';
-	// } else {
-	// 	dest[0] = '0' + number / 10;
-	// }
-	// dest[1] = '0' + number % 10;
-	// if (number == 1 || number == 21) {
-	// 	dest[2] = 's'; dest[3] = 't';
-	// } else if (number == 2 || number == 22) {
-	// 	dest[2] = 'n'; dest[3] = 'd';
-	// } else if (number == 3 || number == 23) {
-	// 	dest[2] = 'r'; dest[3] = 'd';
-	// }
-}
+// static void format_number(char *dest, int number) {
+// 	if (number < 10) {
+// 				dest[4] = '0' + word_pos % 10; 
+// 			} else {
+// 				dest[4] = '0' + word_pos / 10; 
+// 				dest[7] = '0' + word_pos % 10;    
+// 			}
+// 	// if (number < 10) {
+// 	// 	dest[0] = ' ';
+// 	// } else {
+// 	// 	dest[0] = '0' + number / 10;
+// 	// }
+// 	// dest[1] = '0' + number % 10;
+// 	// if (number == 1 || number == 21) {
+// 	// 	dest[2] = 's'; dest[3] = 't';
+// 	// } else if (number == 2 || number == 22) {
+// 	// 	dest[2] = 'n'; dest[3] = 'd';
+// 	// } else if (number == 3 || number == 23) {
+// 	// 	dest[2] = 'r'; dest[3] = 'd';
+// 	// }
+// }
 
 /* Send a request for a new word/matrix code to the PC.
  */
