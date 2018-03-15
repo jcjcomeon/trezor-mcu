@@ -435,23 +435,26 @@ void layoutResetWord(const char *word, int pass, int word_pos, bool last)
 	// 	index_str[2] = 'r'; index_str[3] = 'd';
 	// }
 
-	layoutZhDialogSwipe(&bmp_icon_info, NULL, btnYes, NULL, action, (word_pos < 10 ? zhunitdesc  : zhdesc), NULL, word);
-	// int left = 0;
-	// oledClear();
-	// oledDrawBitmap(0, 0, &bmp_icon_info);
-	// left = bmp_icon_info.width + 4;
+	//layoutZhDialogSwipe(&bmp_icon_info, NULL, btnYes, NULL, action, (word_pos < 10 ? zhunitdesc  : zhdesc), NULL, word);
+	int left = 0;
+	oledClear();
+	oledDrawBitmap(0, 0, &bmp_icon_info);
+	left = bmp_icon_info.width + 4;
 
-	// oledDrawZh(left, 0 * 9, action);
-	// //oledDrawString(left, 0 * 9, action);
-	// oledDrawZh(left, 2 * 9, word_pos < 10 ? zhunitdesc  : zhdesc);
-	// //oledDrawString(left, 2 * 9, word_pos < 10 ? index_str + 1 : index_str);
-	// oledDrawStringDouble(left, 3 * 9, word);
-	// oledHLine(OLED_HEIGHT - 13);
+	oledDrawZh(left, 0 * 9, action);
+	//oledDrawString(left, 0 * 9, action);
+	oledDrawZh(left, 16, word_pos < 10 ? zhunitdesc  : zhdesc);
+	//oledDrawString(left, 2 * 9, word_pos < 10 ? index_str + 1 : index_str);
+	oledDrawStringDouble(left, 3 * 9, word);
+	oledHLine(OLED_HEIGHT - 13);
+	oledDrawString(OLED_WIDTH - fontCharWidth('\x06') - 1, OLED_HEIGHT - 8, "\x06");
+	oledDrawZh(OLED_WIDTH - ((strlen(btnYes) / 3) * 12) - 8 - 1, OLED_HEIGHT - 12, btnYes);
+	oledInvert(OLED_WIDTH - ((strlen(btnYes) / 3) * 12) - 8 - 2, OLED_HEIGHT - 12, OLED_WIDTH - 1, OLED_HEIGHT - 1);
 	// oledDrawString(OLED_WIDTH - fontCharWidth('\x06') - 1, OLED_HEIGHT - 8, "\x06");
 	// oledDrawZh(OLED_WIDTH - oledStringWidth(btnYes) - fontCharWidth('\x06') - 3, OLED_HEIGHT - 8, btnYes);
 	// //oledDrawString(OLED_WIDTH - oledStringWidth(btnYes) - fontCharWidth('\x06') - 3, OLED_HEIGHT - 8, btnYes);
 	// oledInvert(OLED_WIDTH - oledStringWidth(btnYes) - fontCharWidth('\x06') - 4, OLED_HEIGHT - 9, OLED_WIDTH - 1, OLED_HEIGHT - 1);
-	// oledRefresh();
+	oledRefresh();
 }
 
 static const char *slip44_extras(uint32_t coin_type)
