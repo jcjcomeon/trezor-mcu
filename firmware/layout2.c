@@ -217,7 +217,7 @@ void layoutFeeOverThreshold(const CoinInfo *coin, uint64_t fee)
 {
 	char str_fee[32];
 	bn_format_uint64(fee, NULL, coin->coin_shortcut, BITCOIN_DIVISIBILITY, 0, false, str_fee, sizeof(str_fee));
-	layoutZhDialog(&bmp_icon_question, 	"取消", "确认",	NULL, str_out, 	"的手续费过高", NULL, "确认发送吗#?#"	);
+	layoutZhDialog(&bmp_icon_question, 	"取消", "确认",	NULL, str_fee, 	"的手续费过高", NULL, "确认发送吗#?#"	);
 	// layoutDialogSwipe(&bmp_icon_question,
 	// 	_("Cancel"),
 	// 	_("Confirm"),
@@ -307,7 +307,7 @@ void layoutVerifyAddress(const char *address)
 {
 	const char **str = split_message((const uint8_t *)address, strlen(address), 17);
 	layoutZhDialogSwipe(&bmp_icon_info, "取消", "确认", 
-					"验证这个账户", "签名的消息#?#"
+					"验证这个账户", "签名的消息#?#",
 					str[0], str[1], str[2]);
 	// layoutDialogSwipe(&bmp_icon_info, _("Cancel"), _("Confirm"),
 	// 	_("Confirm address?"),
