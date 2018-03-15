@@ -392,7 +392,7 @@ void layoutResetWord(const char *word, int pass, int word_pos, bool last)
 			btnYes = "完成";
 			//btnYes = _("Finish");
 		} else {
-			btnYes = "再一次检查";
+			btnYes = "再检查一次";
 			//btnYes = _("Again");
 		}
 	} else {
@@ -435,22 +435,23 @@ void layoutResetWord(const char *word, int pass, int word_pos, bool last)
 	// 	index_str[2] = 'r'; index_str[3] = 'd';
 	// }
 
-	int left = 0;
-	oledClear();
-	oledDrawBitmap(0, 0, &bmp_icon_info);
-	left = bmp_icon_info.width + 4;
+	layoutZhDialogSwipe(&bmp_icon_info, NULL, btnYes, NULL, action, (word_pos < 10 ? zhunitdesc  : zhdesc), NULL, word);
+	// int left = 0;
+	// oledClear();
+	// oledDrawBitmap(0, 0, &bmp_icon_info);
+	// left = bmp_icon_info.width + 4;
 
-	oledDrawZh(left, 0 * 9, action);
-	//oledDrawString(left, 0 * 9, action);
-	oledDrawZh(left, 2 * 9, word_pos < 10 ? zhunitdesc  : zhdesc);
-	//oledDrawString(left, 2 * 9, word_pos < 10 ? index_str + 1 : index_str);
-	oledDrawStringDouble(left, 3 * 9, word);
-	oledHLine(OLED_HEIGHT - 13);
-	oledDrawString(OLED_WIDTH - fontCharWidth('\x06') - 1, OLED_HEIGHT - 8, "\x06");
-	oledDrawZh(OLED_WIDTH - oledStringWidth(btnYes) - fontCharWidth('\x06') - 3, OLED_HEIGHT - 8, btnYes);
-	//oledDrawString(OLED_WIDTH - oledStringWidth(btnYes) - fontCharWidth('\x06') - 3, OLED_HEIGHT - 8, btnYes);
-	oledInvert(OLED_WIDTH - oledStringWidth(btnYes) - fontCharWidth('\x06') - 4, OLED_HEIGHT - 9, OLED_WIDTH - 1, OLED_HEIGHT - 1);
-	oledRefresh();
+	// oledDrawZh(left, 0 * 9, action);
+	// //oledDrawString(left, 0 * 9, action);
+	// oledDrawZh(left, 2 * 9, word_pos < 10 ? zhunitdesc  : zhdesc);
+	// //oledDrawString(left, 2 * 9, word_pos < 10 ? index_str + 1 : index_str);
+	// oledDrawStringDouble(left, 3 * 9, word);
+	// oledHLine(OLED_HEIGHT - 13);
+	// oledDrawString(OLED_WIDTH - fontCharWidth('\x06') - 1, OLED_HEIGHT - 8, "\x06");
+	// oledDrawZh(OLED_WIDTH - oledStringWidth(btnYes) - fontCharWidth('\x06') - 3, OLED_HEIGHT - 8, btnYes);
+	// //oledDrawString(OLED_WIDTH - oledStringWidth(btnYes) - fontCharWidth('\x06') - 3, OLED_HEIGHT - 8, btnYes);
+	// oledInvert(OLED_WIDTH - oledStringWidth(btnYes) - fontCharWidth('\x06') - 4, OLED_HEIGHT - 9, OLED_WIDTH - 1, OLED_HEIGHT - 1);
+	// oledRefresh();
 }
 
 static const char *slip44_extras(uint32_t coin_type)
