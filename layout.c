@@ -185,10 +185,10 @@ void layoutProgress(const char *desc, int permil)
 	// text
 	oledBox(0, OLED_HEIGHT - 16, OLED_WIDTH - 1, OLED_HEIGHT - 16 + 7, 0);
 	if (desc) {
-		if(*desc < 128)
-			oledDrawStringCenter(OLED_HEIGHT - 16, desc);
-		else
-			oledDrawZh(0, OLED_HEIGHT - 20, desc);
+		// if(*desc < 128)
+		oledDrawStringCenter(OLED_HEIGHT - 16, desc);
+		// else
+		// 	oledDrawZh(0, OLED_HEIGHT - 20, desc);
 	}
 	oledRefresh();
 }
