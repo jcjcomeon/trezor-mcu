@@ -230,7 +230,7 @@ static void protectCheckMaxTry(uint32_t wait) {
 		return;
 
 	storage_wipe();
-	layoutDialog(&bmp_icon_error, NULL, NULL, NULL, "已到错误次数", "已删除设备信息#!#", "请拔出钱包", NULL);
+	layoutZhDialog(&bmp_icon_error, NULL, NULL, NULL, "已到#P##I##N#码错误次数", "已删除设备信息#!#", "请拔出钱包", NULL);
 	//layoutDialog(&bmp_icon_error, NULL, NULL, NULL, _("Too many wrong PIN"), _("attempts. Storage has"), _("been wiped."), NULL, _("Please unplug"), _("the device."));
 	for (;;) {} // loop forever
 }
